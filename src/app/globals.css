@@ -1,26 +1,55 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Paleta de colores */
+  --color-primary: #2ecc70;
+  --color-primary-dark: #25a85c;
+  --color-bg-dark: #0d1410;
+  --color-bg-darker: #131f18;
+  --color-surface-dark: #16221b;
+  --color-border-dark: #2a372f;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #94a3b8;
+  --color-dark: #0d1410;
+
+  /* Tipografía (Montserrat como estándar) */
+  --font-sans: var(--font-montserrat);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    @apply bg-bg-dark text-text-primary font-sans antialiased selection:bg-primary selection:text-dark;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Títulos usando Montserrat ExtraBold (peso 900) */
+  .title-main {
+    @apply font-extrabold tracking-tighter text-text-primary;
+  }
+
+  /* Botón principal */
+  .cta-button {
+    @apply px-8 py-3.5 rounded-xl font-bold bg-primary text-dark 
+           transition-all duration-300 hover:scale-105 hover:brightness-110 
+           active:scale-98 font-sans overflow-hidden;
+  }
+
+  /* Badge para secciones */
+  .section-badge {
+    @apply inline-block px-4 py-1.5 mb-4 bg-primary/5 border border-primary/20 
+           rounded-full text-xs font-bold text-primary uppercase tracking-widest font-sans;
+  }
+}
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 20s linear infinite;
 }

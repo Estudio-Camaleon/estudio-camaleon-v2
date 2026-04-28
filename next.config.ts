@@ -1,8 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  /* Aquí puedes añadir configuraciones a futuro como:
+     - Redirecciones (redirects)
+     - Headers de seguridad
+     - Dominios de imágenes permitidos
+  */
 };
 
 export default nextConfig;
