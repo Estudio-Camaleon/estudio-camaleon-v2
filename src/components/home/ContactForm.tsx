@@ -1,19 +1,41 @@
 "use client";
 
 import React, { useState } from "react";
+import { sendEmail } from "@/app/actions/send-email";
 
 const ContactForm = () => {
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">(
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">(
     "idle",
   );
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
+    setErrorMessage(null);
 
-    // Simulación de envío
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setStatus("success");
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const response = await sendEmail(formData);
+
+      if (response.success) {
+        setStatus("success");
+        e.currentTarget.reset();
+      } else {
+        setStatus("error");
+        setErrorMessage(
+          response.error?.message || "Ocurrió un error enviando el mensaje.",
+        );
+      }
+    } catch (error) {
+      setStatus("error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Ocurrió un error inesperado.",
+      );
+    }
   };
 
   return (
@@ -38,6 +60,7 @@ const ContactForm = () => {
                 Nombre
               </label>
               <input
+                name="name"
                 type="text"
                 required
                 className="bg-bg-dark border border-border-dark rounded-xl p-4 text-white focus:border-primary outline-none transition-all"
@@ -49,6 +72,7 @@ const ContactForm = () => {
                 Email
               </label>
               <input
+                name="email"
                 type="email"
                 required
                 className="bg-bg-dark border border-border-dark rounded-xl p-4 text-white focus:border-primary outline-none transition-all"
@@ -62,6 +86,7 @@ const ContactForm = () => {
               Mensaje
             </label>
             <textarea
+              name="message"
               rows={4}
               required
               className="bg-bg-dark border border-border-dark rounded-xl p-4 text-white focus:border-primary outline-none transition-all resize-none"
@@ -71,15 +96,21 @@ const ContactForm = () => {
 
           <button
             type="submit"
-            disabled={status !== "idle"}
+            disabled={status === "submitting"}
             className="cta-button w-full md:w-auto"
           >
-            {status === "idle" ? "Enviar Proyecto" : "Enviando..."}
+            {status === "submitting" ? "Enviando..." : "Enviar Proyecto"}
           </button>
 
           {status === "success" && (
             <p className="mt-4 text-primary text-center font-bold">
               ¡Mensaje enviado con éxito! Te contactaremos pronto.
+            </p>
+          )}
+
+          {status === "error" && (
+            <p className="mt-4 text-red-400 text-center font-bold">
+              {errorMessage || "No se pudo enviar el mensaje. Intenta de nuevo."}
             </p>
           )}
         </form>
