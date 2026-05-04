@@ -14,14 +14,15 @@ const ContactForm = () => {
     setStatus("submitting");
     setErrorMessage(null);
 
-    const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
 
     try {
       const response = await sendEmail(formData);
 
       if (response.success) {
         setStatus("success");
-        e.currentTarget.reset();
+        form.reset();
       } else {
         setStatus("error");
         setErrorMessage(
