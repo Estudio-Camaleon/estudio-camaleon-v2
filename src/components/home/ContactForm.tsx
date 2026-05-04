@@ -25,7 +25,7 @@ const ContactForm = () => {
       } else {
         setStatus("error");
         setErrorMessage(
-          response.error?.message || "Ocurrió un error enviando el mensaje.",
+          response.error || "Ocurrió un error enviando el mensaje.",
         );
       }
     } catch (error) {
