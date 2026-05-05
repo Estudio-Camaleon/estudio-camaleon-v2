@@ -1,7 +1,6 @@
 import {
   Body,
   Container,
-  Head,
   Heading,
   Text,
   Tailwind,
@@ -27,7 +26,7 @@ export const WelcomeEmail = ({ name, email, message }: EmailProps) => (
           {name} ({email})
         </Text>
         <Text className="bg-gray-50 p-4 rounded text-gray-800 italic border-l-4 border-green-500">
-          "{message}"
+          &quot;{message}&quot;
         </Text>
       </Container>
     </Body>
