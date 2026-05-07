@@ -41,7 +41,7 @@
            rounded-full text-xs font-bold text-primary uppercase tracking-widest font-sans;
   }
 }
-@keyframes scroll {
+@keyframes tech-scroll {
   from {
     transform: translateX(0);
   }
@@ -50,6 +50,7 @@
   }
 }
 
-.animate-scroll {
-  animation: scroll 20s linear infinite;
+.animate-tech-scroll {
+  animation: tech-scroll 40s linear infinite;
+  will-change: transform;
 }
