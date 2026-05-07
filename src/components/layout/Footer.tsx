@@ -1,5 +1,9 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
+import { FaWhatsapp } from "react-icons/fa";
+import { FiMail, FiMapPin } from "react-icons/fi";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -20,11 +24,10 @@ const Footer = () => {
               />
             </div>
             <p className="text-text-secondary leading-relaxed">
-              Desarrollo de software personalizado. Soluciones escalables que se
-              adaptan a tu negocio.
+              Soluciones escalables que se adaptan a tu negocio.
             </p>
             <a
-              href="https://www.instagram.com/estudiocamaleon.ar/"
+              href="https://www.instagram.com/estudiocamaleon.tuc/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white hover:text-primary transition-colors"
@@ -45,6 +48,11 @@ const Footer = () => {
                 <li key={item}>
                   <a
                     href={`#${item.toLowerCase()}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const el = document.getElementById(item.toLowerCase());
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }}
                     className="hover:text-primary transition-colors"
                   >
                     {item}
@@ -69,16 +77,18 @@ const Footer = () => {
             <h4 className="font-bold text-white mb-6">Contacto</h4>
             <ul className="space-y-4 text-text-secondary">
               <li className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary">
-                  location_on
-                </span>
+                <FiMapPin className="text-primary text-xl shrink-0" aria-hidden="true" />
                 Tucumán, Argentina
               </li>
               <li className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-primary">
-                  mail
-                </span>
+                <FiMail className="text-primary text-xl shrink-0" aria-hidden="true" />
                 estudiocamaleontuc@gmail.com
+              </li>
+              <li className="flex items-center gap-2">
+                <FaWhatsapp className="text-primary text-xl shrink-0" aria-hidden="true" />
+                <a href="https://wa.me/5493813583226" className="hover:text-primary transition-colors">
+                  +54 9 3813 58-3226
+                </a>
               </li>
             </ul>
           </div>
@@ -91,6 +101,16 @@ const Footer = () => {
           </p>
         </div>
       </div>
+      {/* Botón flotante de WhatsApp */}
+      <a
+        href="https://wa.me/5493813583226"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contactar por WhatsApp"
+        className="fixed right-4 bottom-6 md:right-8 md:bottom-8 z-50 bg-[#25D366] p-3 rounded-full shadow-lg hover:scale-105 transition-transform"
+      >
+        <FaWhatsapp className="w-6 h-6 text-white" aria-hidden="true" />
+      </a>
     </footer>
   );
 };
