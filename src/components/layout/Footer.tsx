@@ -40,7 +40,7 @@ const Footer = () => {
             </a>
           </div>
 
-          {/* Enlaces de Navegación */}
+          
           <div>
             <h4 className="font-bold text-white mb-6">Navegación</h4>
             <ul className="space-y-4 text-text-secondary">
