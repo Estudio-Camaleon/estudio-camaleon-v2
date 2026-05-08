@@ -1,7 +1,6 @@
 "use server";
 
 import { Resend } from "resend";
-import { render } from "@react-email/render";
 import { WelcomeEmail } from "@/components/email/WelcomeEmail";
 
 export async function sendEmail(
@@ -34,7 +33,7 @@ export async function sendEmail(
 
   try {
     const resend = new Resend(apiKey);
-    const html = await render(WelcomeEmail({ name, email, message }));
+    const html = WelcomeEmail({ name, email, message });
 
     await resend.emails.send({
       from,
