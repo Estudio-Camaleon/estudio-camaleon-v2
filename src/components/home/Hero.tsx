@@ -59,45 +59,7 @@ const Hero = () => {
 
           {/* LADO DERECHO: DISPOSITIVOS (MOCKUPS) */}
           <div className="relative flex items-center justify-center lg:justify-end animate-in fade-in zoom-in duration-1000 delay-200">
-            {/* Laptop Mockup */}
-            <div className="relative w-full max-w-[550px] z-20 group">
-              <div className="relative aspect-[16/10] bg-black rounded-t-2xl border-[8px] border-[#222] overflow-hidden shadow-2xl ring-1 ring-white/10">
-                <Image
-                  src="/images/proyectos/Neo_portada.webp"
-                  alt="Desktop Preview"
-                  fill
-                  className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-              <div className="h-4 w-full bg-[#1a1a1a] rounded-b-2xl border-t border-white/5 shadow-xl"></div>
-
-              {/* Floating Icon Decor */}
-              <div className="absolute -top-6 -right-6 p-4 bg-surface-dark border border-white/10 rounded-2xl shadow-2xl hidden md:block animate-bounce-slow">
-                <Monitor className="w-6 h-6 text-primary" />
-              </div>
-            </div>
-
-            {/* Smartphone Mockup (Superpuesto) */}
-            <div className="absolute -bottom-10 -left-4 md:-left-10 lg:left-0 z-30 w-[140px] md:w-[180px] group hidden sm:block">
-              <div className="relative h-[280px] md:h-[360px] w-full bg-black rounded-[2.5rem] border-[8px] border-[#222] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.8)] ring-1 ring-white/10">
-                <Image
-                  src="/images/proyectos/MundoAnimeTucumanPortada.png"
-                  alt="Mobile Preview"
-                  fill
-                  className="object-cover object-top"
-                />
-                {/* Notch */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-4 bg-[#222] rounded-b-xl"></div>
-              </div>
-
-              {/* Floating Icon Decor */}
-              <div className="absolute -bottom-4 -right-4 p-3 bg-surface-dark border border-white/10 rounded-xl shadow-2xl animate-pulse">
-                <Smartphone className="w-5 h-5 text-primary" />
-              </div>
-            </div>
-
-            {/* Decoración de fondo (Brillo neón) */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/10 blur-[120px] rounded-full -z-10 animate-pulse"></div>
+            
           </div>
         </div>
       </div>

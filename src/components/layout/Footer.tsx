@@ -39,38 +39,41 @@ const Footer = () => {
       <div className="absolute inset-0 bg-bg-dark -z-10" />
 
       {/* --- EFECTOS HALFTONE Y GLOW --- */}
-      
+
       {/* Esquina Inferior Izquierda */}
-      <div 
+      <div
         className="absolute bottom-0 left-0 w-64 h-64 opacity-20 pointer-events-none"
         style={{
           backgroundImage: `radial-gradient(var(--color-primary, #39FF14) 1px, transparent 0)`,
-          backgroundSize: '12px 12px',
-          maskImage: 'radial-gradient(circle at bottom left, black, transparent 70%)',
-          WebkitMaskImage: 'radial-gradient(circle at bottom left, black, transparent 70%)'
+          backgroundSize: "12px 12px",
+          maskImage:
+            "radial-gradient(circle at bottom left, black, transparent 70%)",
+          WebkitMaskImage:
+            "radial-gradient(circle at bottom left, black, transparent 70%)",
         }}
       />
       <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
       <div className="absolute bottom-10 left-10 w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_12px_#39FF14] animate-pulse pointer-events-none" />
 
       {/* Esquina Inferior Derecha */}
-      <div 
+      <div
         className="absolute bottom-0 right-0 w-64 h-64 opacity-20 pointer-events-none"
         style={{
           backgroundImage: `radial-gradient(var(--color-primary, #39FF14) 1px, transparent 0)`,
-          backgroundSize: '12px 12px',
-          maskImage: 'radial-gradient(circle at bottom right, black, transparent 70%)',
-          WebkitMaskImage: 'radial-gradient(circle at bottom right, black, transparent 70%)'
+          backgroundSize: "12px 12px",
+          maskImage:
+            "radial-gradient(circle at bottom right, black, transparent 70%)",
+          WebkitMaskImage:
+            "radial-gradient(circle at bottom right, black, transparent 70%)",
         }}
       />
       <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-[80px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_12px_#39FF14] animate-pulse pointer-events-none" />
-      
+
       {/* ----------------------------- */}
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-pretty">
-          
           {/* Columna 1: Branding y Redes */}
           <div className="flex flex-col gap-6">
             <div className="relative w-56 h-14">
@@ -122,15 +125,21 @@ const Footer = () => {
               Navegación
             </h4>
             <ul className="space-y-4 text-text-secondary">
-              {["Portafolio", "Proceso", "Contacto", "Nuestro Equipo"].map((item) => {
+              {["Portafolio", "Proceso", "Contacto", "Equipo"].map((item) => {
                 const id = item.toLowerCase();
-                const isPortfolio = id === "portafolio";
+                const isExternal = id === "portafolio" || id === "equipo";
+                const href =
+                  id === "portafolio"
+                    ? "/portfolio"
+                    : id === "equipo"
+                      ? "/team"
+                      : `/#${id}`;
+
                 return (
                   <li key={item} className="group flex items-center gap-2">
                     <FiArrowRight className="w-3 h-3 text-primary opacity-0 group-hover:opacity-100 transition-all -ml-5 group-hover:ml-0" />
                     <Link
-                      href={isPortfolio ? "/portfolio" : `/#${id}`}
-                      onClick={(e) => handleNavClick(e, id)}
+                      href={href}
                       className="hover:text-white transition-colors text-sm lg:text-base font-medium"
                     >
                       {item}
@@ -149,19 +158,27 @@ const Footer = () => {
             <ul className="space-y-5 text-text-secondary">
               <li className="flex items-center gap-3 text-sm lg:text-base group cursor-default">
                 <FiCode className="text-primary group-hover:scale-125 transition-transform" />
-                <span className="group-hover:text-white transition-colors">Desarrollo Full-Stack</span>
+                <span className="group-hover:text-white transition-colors">
+                  Desarrollo Full-Stack
+                </span>
               </li>
               <li className="flex items-center gap-3 text-sm lg:text-base group cursor-default">
                 <FiLayout className="text-primary group-hover:scale-125 transition-transform" />
-                <span className="group-hover:text-white transition-colors">Diseño UI/UX</span>
+                <span className="group-hover:text-white transition-colors">
+                  Diseño UI/UX
+                </span>
               </li>
               <li className="flex items-center gap-3 text-sm lg:text-base group cursor-default">
                 <FiCpu className="text-primary group-hover:scale-125 transition-transform" />
-                <span className="group-hover:text-white transition-colors">Integración de APIs</span>
+                <span className="group-hover:text-white transition-colors">
+                  Integración de APIs
+                </span>
               </li>
               <li className="flex items-center gap-3 text-sm lg:text-base group cursor-default">
                 <FiLayers className="text-primary group-hover:scale-125 transition-transform" />
-                <span className="group-hover:text-white transition-colors">Sistemas de Gestión</span>
+                <span className="group-hover:text-white transition-colors">
+                  Sistemas de Gestión
+                </span>
               </li>
             </ul>
           </div>
@@ -174,7 +191,9 @@ const Footer = () => {
             <ul className="space-y-5 text-text-secondary">
               <li className="flex items-start gap-3">
                 <FiMapPin className="text-primary text-xl shrink-0" />
-                <span className="text-sm lg:text-base font-medium">Tucumán, Argentina</span>
+                <span className="text-sm lg:text-base font-medium">
+                  Tucumán, Argentina
+                </span>
               </li>
               <li className="flex items-center gap-3 group">
                 <FiMail className="text-primary text-xl shrink-0 group-hover:rotate-12 transition-transform" />
