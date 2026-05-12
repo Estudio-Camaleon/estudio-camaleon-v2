@@ -3,13 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import gsap from "gsap";
-import {
-  FiMonitor,
-  FiSmartphone,
-  FiArrowLeft,
-  FiExternalLink,
-  FiImage,
-} from "react-icons/fi";
+import { Monitor, Smartphone, ArrowLeft, ExternalLink } from "lucide-react";
 
 interface ProjectModalProps {
   isOpen: boolean;
@@ -25,23 +19,37 @@ interface ProjectModalProps {
 
 type ViewMode = "selection" | "desktop" | "mobile";
 
-// Componente para cuando no hay imagen disponible
+// --- CUSTOM HOOK MEJORADO (Derived State) ---
+function useValidUrl(url?: string) {
+  if (!url || url.trim() === "" || url === "#") {
+    return false;
+  }
+
+  try {
+    const parsedUrl = new URL(url);
+    return parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 const PlaceholderContent = ({ mode }: { mode: string }) => (
-  <div className="w-full h-full flex flex-col items-center justify-center bg-bg-dark/50 gap-4 p-10 text-center">
-    <div className="relative w-24 h-24 opacity-20 animate-pulse">
+  <div className="w-full h-full flex flex-col items-center justify-center bg-[#0a0a0a] gap-6 p-10 text-center">
+    <div className="relative w-20 h-20 opacity-30 animate-pulse">
       <Image
         src="/icons/Logowebjunto.svg"
         alt="Estudio Camaleón"
         fill
-        className="object-contain grayscale"
+        className="object-contain"
       />
     </div>
     <div className="space-y-2">
-      <p className="text-primary/50 font-bold uppercase tracking-widest text-[10px]">
-        Preview no disponible
+      <p className="text-primary font-bold uppercase tracking-[0.3em] text-[10px]">
+        Procesando UI
       </p>
-      <p className="text-white/20 text-xs max-w-[200px]">
-        Estamos procesando las capturas de la versión {mode} para este proyecto.
+      <p className="text-white/40 text-xs max-w-[220px] font-light leading-relaxed">
+        Las capturas de la interfaz {mode} están siendo renderizadas para este
+        proyecto.
       </p>
     </div>
   </div>
@@ -57,18 +65,23 @@ export default function ProjectModal({
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
 
+  const isLinkValid = useValidUrl(project?.link);
+
   useEffect(() => {
     if (isOpen) {
-      setView("selection");
       const tl = gsap.timeline();
       tl.to(overlayRef.current, { opacity: 1, duration: 0.3 }).to(
         contentRef.current,
-        { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.7)" },
+        { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.5)" },
         "-=0.1",
       );
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
+      const timer = setTimeout(() => {
+        setView("selection");
+      }, 300);
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
@@ -77,97 +90,95 @@ export default function ProjectModal({
   return (
     <div
       ref={modalRef}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10"
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
     >
-      {/* Overlay con desenfoque profundo */}
       <div
         ref={overlayRef}
         onClick={onClose}
-        className="absolute inset-0 bg-bg-dark/95 backdrop-blur-xl opacity-0"
+        className="absolute inset-0 bg-bg-dark/95 backdrop-blur-xl opacity-0 cursor-pointer"
       />
 
-      {/* Contenedor Principal */}
       <div
         ref={contentRef}
-        className="relative w-full max-w-5xl bg-surface-dark border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl opacity-0 scale-95 translate-y-10 flex flex-col max-h-[90vh]"
+        className="relative w-full max-w-6xl bg-surface-dark border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl opacity-0 scale-95 translate-y-10 flex flex-col max-h-[90vh]"
       >
-        {/* Header Dinámico */}
-        <div className="flex items-center justify-between p-6 border-b border-white/5 bg-bg-dark/50 shrink-0">
-          <div className="flex items-center gap-4">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-white/5 bg-black/40 shrink-0">
+          <div className="flex items-center gap-6">
             {view !== "selection" && (
               <button
                 onClick={() => setView("selection")}
-                className="flex items-center gap-2 text-primary hover:text-white transition-all text-xs font-bold uppercase tracking-[0.2em] group"
+                className="flex items-center gap-2 text-primary hover:text-white transition-all text-[10px] font-bold uppercase tracking-widest group bg-white/5 px-4 py-2 rounded-full"
               >
-                <FiArrowLeft className="group-hover:-translate-x-1 transition-transform" />{" "}
+                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                 Volver
               </button>
             )}
-            <h3 className="text-xl font-bold text-white tracking-tight">
-              {view === "selection"
-                ? project.title
-                : `${project.title} Preview`}
+            <h3 className="text-xl md:text-2xl font-black text-white tracking-tight">
+              {project.title}
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-primary/20 hover:text-primary transition-all text-white"
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-primary hover:text-black transition-all text-white"
           >
             ✕
           </button>
         </div>
 
-        {/* Área de Contenido con Scroll Personalizado */}
-        <div className="p-6 md:p-12 overflow-y-auto custom-scrollbar flex-grow bg-gradient-to-b from-transparent to-bg-dark/20">
-          {/* 1. MENÚ DE SELECCIÓN */}
+        {/* Content Body */}
+        <div className="p-6 md:p-12 overflow-y-auto custom-scrollbar flex-grow bg-gradient-to-b from-transparent to-black/40">
           {view === "selection" && (
-            <div className="flex flex-col items-center justify-center py-12 animate-in fade-in zoom-in duration-500">
-              <span className="text-primary/60 text-[10px] font-bold uppercase tracking-[0.3em] mb-4">
-                Seleccionar Vista
+            <div className="flex flex-col items-center justify-center py-8 md:py-16">
+              <span className="text-primary/80 text-[10px] font-bold uppercase tracking-[0.4em] mb-4">
+                Preview Mode
               </span>
-              <h4 className="text-white text-2xl md:text-3xl font-black mb-10 text-center">
-                Explora la experiencia
+              <h4 className="text-white text-3xl md:text-4xl font-black mb-12 text-center tracking-tighter">
+                Selecciona la Vista
               </h4>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-3xl">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
                 <button
                   onClick={() => setView("desktop")}
-                  className="group relative flex flex-col items-center gap-6 p-12 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-primary/40 hover:bg-primary/[0.02] transition-all duration-500"
+                  className="group relative flex flex-col items-center gap-6 p-12 rounded-[2rem] bg-[#0f0f0f] border border-white/5 hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 shadow-xl"
                 >
-                  <div className="p-6 rounded-2xl bg-white/5 group-hover:bg-primary/10 transition-colors">
-                    <FiMonitor className="w-12 h-12 text-text-secondary group-hover:text-primary transition-colors" />
+                  <div className="p-6 rounded-3xl bg-white/5 group-hover:bg-primary/20 transition-colors">
+                    <Monitor
+                      className="w-12 h-12 text-white/50 group-hover:text-primary transition-colors"
+                      strokeWidth={1.5}
+                    />
                   </div>
-                  <span className="font-bold text-white uppercase tracking-widest text-xs">
+                  <span className="font-bold text-white uppercase tracking-[0.2em] text-xs">
                     Desktop Version
                   </span>
-                  <div className="absolute inset-0 border-2 border-primary/0 group-hover:border-primary/10 rounded-[2rem] transition-all" />
                 </button>
 
                 <button
                   onClick={() => setView("mobile")}
-                  className="group relative flex flex-col items-center gap-6 p-12 rounded-[2rem] bg-white/[0.02] border border-white/5 hover:border-primary/40 hover:bg-primary/[0.02] transition-all duration-500"
+                  className="group relative flex flex-col items-center gap-6 p-12 rounded-[2rem] bg-[#0f0f0f] border border-white/5 hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 shadow-xl"
                 >
-                  <div className="p-6 rounded-2xl bg-white/5 group-hover:bg-primary/10 transition-colors">
-                    <FiSmartphone className="w-12 h-12 text-text-secondary group-hover:text-primary transition-colors" />
+                  <div className="p-6 rounded-3xl bg-white/5 group-hover:bg-primary/20 transition-colors">
+                    <Smartphone
+                      className="w-12 h-12 text-white/50 group-hover:text-primary transition-colors"
+                      strokeWidth={1.5}
+                    />
                   </div>
-                  <span className="font-bold text-white uppercase tracking-widest text-xs">
+                  <span className="font-bold text-white uppercase tracking-[0.2em] text-xs">
                     Mobile Version
                   </span>
-                  <div className="absolute inset-0 border-2 border-primary/0 group-hover:border-primary/10 rounded-[2rem] transition-all" />
                 </button>
               </div>
             </div>
           )}
 
-          {/* 2. PREVIEW LAPTOP */}
           {view === "desktop" && (
-            <div className="animate-in slide-in-from-bottom-4 duration-500 flex flex-col items-center">
-              <div className="relative w-full max-w-[850px] group">
-                <div className="relative aspect-[16/10] bg-[#0c0c0c] rounded-t-3xl border-[12px] border-[#222] overflow-hidden shadow-2xl ring-1 ring-white/10">
+            <div className="flex flex-col items-center transition-opacity duration-500">
+              <div className="relative w-full max-w-[900px]">
+                <div className="relative aspect-[16/10] bg-[#0a0a0a] rounded-t-3xl border-[12px] md:border-[16px] border-[#111] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.8)] ring-1 ring-white/5">
                   {project.imgLaptop ? (
                     <Image
                       src={project.imgLaptop}
-                      alt="Laptop preview"
+                      alt="Desktop preview"
                       fill
                       className="object-cover object-top"
                     />
@@ -175,22 +186,19 @@ export default function ProjectModal({
                     <PlaceholderContent mode="Desktop" />
                   )}
                 </div>
-                {/* Base de la laptop */}
-                <div className="h-6 w-full bg-[#1a1a1a] rounded-b-3xl relative border-t border-white/5 shadow-xl">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-2 bg-[#333] rounded-b-full" />
+                <div className="h-6 md:h-8 w-full bg-[#111] rounded-b-3xl relative border-t border-white/5 shadow-2xl">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 md:w-32 h-1.5 md:h-2 bg-[#222] rounded-b-full" />
                 </div>
               </div>
             </div>
           )}
 
-          {/* 3. PREVIEW MOBILE */}
           {view === "mobile" && (
-            <div className="animate-in slide-in-from-bottom-4 duration-500 flex flex-col items-center">
-              <div className="relative w-[300px]">
-                <div className="relative h-[600px] w-full bg-[#0c0c0c] rounded-[3.5rem] border-[14px] border-[#222] overflow-hidden shadow-2xl ring-1 ring-white/10">
-                  {/* Notch / Dynamic Island simulado */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-8 bg-[#222] z-20 rounded-b-[2rem] flex items-center justify-center">
-                    <div className="w-3 h-3 rounded-full bg-[#0a0a0a] border border-white/5" />
+            <div className="flex flex-col items-center transition-opacity duration-500">
+              <div className="relative w-[280px] md:w-[320px]">
+                <div className="relative h-[600px] md:h-[680px] w-full bg-[#0a0a0a] rounded-[3rem] border-[14px] border-[#111] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.8)] ring-1 ring-white/5">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-[#111] z-20 rounded-b-[1.5rem] flex items-center justify-center">
+                    <div className="w-2.5 h-2.5 rounded-full bg-black border border-white/10" />
                   </div>
 
                   {project.imgMobile ? (
@@ -204,26 +212,22 @@ export default function ProjectModal({
                     <PlaceholderContent mode="Mobile" />
                   )}
                 </div>
-                {/* Botones laterales simulados */}
-                <div className="absolute -left-4 top-24 w-1 h-12 bg-[#222] rounded-l-md" />
-                <div className="absolute -right-4 top-32 w-1 h-20 bg-[#222] rounded-r-md" />
+                <div className="absolute -left-3.5 top-28 w-1 h-14 bg-[#111] rounded-l-md" />
+                <div className="absolute -right-3.5 top-36 w-1 h-20 bg-[#111] rounded-r-md" />
               </div>
             </div>
           )}
 
-          {/* Footer del Modal (Botón de Acción) */}
-          {view !== "selection" && (
-            <div className="mt-12 text-center max-w-2xl mx-auto pb-8 animate-in fade-in slide-in-from-top-2 duration-700 delay-200">
-              <p className="text-text-secondary text-sm md:text-base mb-10 leading-relaxed italic opacity-80">
-                &quot;{project.description}&quot;
-              </p>
+          {/* RENDERIZADO CONDICIONAL DEL BOTÓN */}
+          {view !== "selection" && isLinkValid && (
+            <div className="mt-12 text-center max-w-2xl mx-auto pb-6 animate-in fade-in zoom-in duration-500">
               <a
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 px-10 py-5 bg-primary text-black font-black rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(57,255,20,0.2)] hover:shadow-primary/40 uppercase text-xs tracking-[0.2em]"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-black font-black rounded-full hover:scale-105 active:scale-95 transition-all shadow-[0_0_30px_rgba(57,255,20,0.2)] uppercase text-[10px] tracking-[0.2em]"
               >
-                Visitar Proyecto Real <FiExternalLink className="text-lg" />
+                Visitar Proyecto Real <ExternalLink className="w-4 h-4" />
               </a>
             </div>
           )}

@@ -78,6 +78,15 @@ const Navbar = () => {
               href="/portfolio"
               className="text-[11px] font-bold hover:text-primary transition-colors uppercase tracking-[0.2em]"
             >
+              Servicios
+            </Link>
+          </div>
+
+          <div className="hidden md:flex items-center gap-8 pe-2">
+            <Link
+              href="/portfolio"
+              className="text-[11px] font-bold hover:text-primary transition-colors uppercase tracking-[0.2em]"
+            >
               Portafolio
             </Link>
           </div>
