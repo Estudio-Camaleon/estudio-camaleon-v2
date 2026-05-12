@@ -6,6 +6,11 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "6mb",
+    },
+  },
   /* Aquí puedes añadir configuraciones a futuro como:
      - Redirecciones (redirects)
      - Headers de seguridad
