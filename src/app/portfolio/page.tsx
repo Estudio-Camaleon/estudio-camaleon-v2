@@ -1,28 +1,75 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { portfolioData } from "@/data/portfolio";
+import { portfolioData, Project } from "@/data/portfolio";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import MascotaSaludo from "@/components/ui/MascotaSaludo";
+import ProjectModal from "@/components/portfolio/ProjectModal";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+// --- SUB-COMPONENTE: PREVISUALIZACIÓN CON HOVER ---
+function ProjectPreview({
+  project,
+  index,
+}: {
+  project: Project;
+  index: number;
+}) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      className={`relative group ${index % 2 !== 0 ? "md:order-2" : ""}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* MASCOTA POSICIONADA COMO LA IMAGEN:
+          - bottom-[-60px]: Para que quede "colgando" del borde inferior.
+          - left-1/2 y -translate-x-1/2: Para centrarla exactamente a la mitad del ancho.
+      */}
+      <div className="absolute bottom-[-60px] left-1/2 -translate-x-1/2 z-30 w-48 h-48 pointer-events-none flex items-end justify-center">
+        <MascotaSaludo active={isHovered} />
+      </div>
+
+      {/* Contenedor de la Imagen: Quitamos el overflow-hidden solo si queremos que 
+          el cuerpo de la mascota se vea por fuera de la caja, 
+          pero lo mantenemos para que la imagen mantenga sus bordes redondeados. */}
+      <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-primary/5">
+        <Image
+          src={project.img}
+          alt={project.title}
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          priority={index < 2}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/60 to-transparent" />
+      </div>
+    </div>
+  );
+}
+
+// --- COMPONENTE PRINCIPAL ---
 export default function PortfolioPage() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const hasProjects = portfolioData && portfolioData.length > 0;
 
   useEffect(() => {
-    // Solo inicializamos GSAP si hay proyectos para pinear
-    if (portfolioData.length === 0) return;
+    if (!hasProjects) return;
 
     const ctx = gsap.context(() => {
-      const panels = gsap.utils.toArray<HTMLElement>(".portfolio-panel");
+      const panels = gsap.utils.toArray(".portfolio-panel");
 
-      panels.forEach((panel, i) => {
+      panels.forEach((panel: any, i: number) => {
         const isLast = i === panels.length - 1;
 
         ScrollTrigger.create({
@@ -31,20 +78,27 @@ export default function PortfolioPage() {
           pin: !isLast,
           pinSpacing: false,
           scrub: 1,
-          end: () => `+=${window.innerHeight * 2}`,
+          end: () => `+=${window.innerHeight * 1.5}`,
           invalidateOnRefresh: true,
         });
       });
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [hasProjects]);
+
+  const handleOpenModal = (project: Project) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
 
   return (
-    <div className="bg-bg-dark min-h-screen">
+    <main
+      ref={containerRef}
+      className="bg-bg-dark min-h-screen relative overflow-x-hidden"
+    >
       <Navbar />
 
-      {/* Video de Fondo Fijo */}
       <div className="fixed inset-0 z-0">
         <video
           autoPlay
@@ -54,100 +108,95 @@ export default function PortfolioPage() {
           className="w-full h-full object-cover"
           src="/videos/Portafolio.webm"
         />
-        <div className="absolute inset-0 bg-bg-dark/90 backdrop-blur-[2px]"></div>
+        <div className="absolute inset-0 bg-bg-dark/40 backdrop-blur-[2px]" />
       </div>
 
-      <main ref={containerRef} className="relative z-10">
-        {/* HERO SECTION */}
-        <section className="portfolio-panel relative min-h-screen flex items-center justify-center pt-20">
-          <div className="text-center container mx-auto px-6">
-            <span className="section-badge mb-4">Casos de Éxito</span>
-            <h1 className="title-main text-5xl md:text-8xl mt-4 mb-6">
-              Nuestro <span className="text-primary">Impacto</span> Digital
-            </h1>
-            <p className="text-text-secondary max-w-2xl mx-auto text-lg leading-relaxed mb-12">
-              {portfolioData.length > 0
-                ? "Desliza para explorar nuestras soluciones de ingeniería de software."
-                : "Estamos preparando una selección de nuestros mejores trabajos."}
-            </p>
+      <section className="relative z-10 h-[60vh] flex flex-col items-center justify-center text-center px-4">
+        <span className="section-badge animate-fade-in">Casos de Éxito</span>
+        <h1 className="title-main text-5xl md:text-7xl mb-4 text-white">
+          Nuestro Impacto Digital
+        </h1>
+        <p className="text-text-secondary max-w-2xl mx-auto">
+          {hasProjects
+            ? "Desliza para explorar nuestras soluciones de ingeniería de software."
+            : "Estamos preparando nuevos lanzamientos para ti."}
+        </p>
 
-            {portfolioData.length > 0 && (
-              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce flex flex-col items-center gap-2">
-                <span className="text-primary/50 text-[10px] uppercase tracking-[0.2em]">
-                  Scroll
-                </span>
-                <span className="text-primary text-3xl">↓</span>
-              </div>
-            )}
+        {hasProjects && (
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+            <span className="text-[10px] uppercase tracking-widest font-bold text-primary">
+              Scroll
+            </span>
+            <span className="text-2xl text-primary">↓</span>
           </div>
-        </section>
+        )}
+      </section>
 
-        {/* PANELES DE PROYECTOS O MENSAJE VACÍO */}
-        {portfolioData.length === 0 ? (
-          <section className="h-[60vh] flex items-center justify-center">
-            <div className="text-center p-12 rounded-3xl bg-surface-dark/50 border border-border-dark backdrop-blur-md">
-              <h3 className="text-2xl font-bold text-white mb-2">
-                Próximamente
-              </h3>
-              <p className="text-text-secondary">
-                Estamos actualizando nuestro portafolio con nuevos proyectos.
-              </p>
-            </div>
-          </section>
-        ) : (
+      <div className="relative z-10">
+        {hasProjects ? (
           portfolioData.map((project, index) => (
             <section
               key={project.title}
               className="portfolio-panel relative h-screen w-full flex items-center justify-center overflow-hidden"
             >
-              <div className="absolute inset-0 bg-bg-dark border-t border-border-dark/50 shadow-[0_-30px_60px_rgba(0,0,0,0.8)]"></div>
-              <div className="max-w-7xl mx-auto px-6 w-full relative z-20">
-                <div
-                  className={`flex flex-col md:flex-row items-center gap-12 md:gap-24 ${index % 2 !== 0 ? "md:flex-row-reverse" : ""}`}
-                >
-                  <div className="w-full md:w-1/2 group">
-                    <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 shadow-2xl transition-transform duration-700 group-hover:scale-[1.02]">
-                      <Image
-                        src={project.img}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                      />
-                      <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                  </div>
-                  <div className="w-full md:w-1/2">
-                    <div className="inline-block px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-bold uppercase mb-6 tracking-tighter">
+              <div className="absolute inset-0 bg-bg-dark shadow-[0_-30px_60px_rgba(0,0,0,0.8)] border-t border-white/5" />
+
+              <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-20">
+                <ProjectPreview project={project} index={index} />
+
+                <div className="flex flex-col space-y-6">
+                  <div>
+                    <span className="text-primary font-bold text-sm uppercase tracking-widest">
                       {project.category}
-                    </div>
-                    <h2 className="title-main text-4xl md:text-6xl mb-6 text-white tracking-tight leading-none">
+                    </span>
+                    <h2 className="text-4xl md:text-5xl font-black text-white mt-2">
                       {project.title}
                     </h2>
-                    <p className="text-text-secondary text-lg mb-8 leading-relaxed max-w-xl">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {project.techStack.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1.5 bg-surface-dark border border-white/5 text-[10px] font-bold text-white/60 rounded-md uppercase"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
+                  </div>
+
+                  <p className="text-text-secondary text-lg leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 bg-surface-dark border border-white/5 text-[10px] font-bold text-white/60 rounded uppercase"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="pt-4">
+                    <button
+                      onClick={() => handleOpenModal(project)}
+                      className="cta-button inline-block text-center min-w-[200px]"
+                    >
+                      Ver Proyecto →
+                    </button>
                   </div>
                 </div>
               </div>
             </section>
           ))
+        ) : (
+          <div className="h-[40vh] flex items-center justify-center text-white">
+            <p className="bg-surface-dark px-8 py-4 rounded-2xl border border-white/5">
+              Próximamente más proyectos...
+            </p>
+          </div>
         )}
-      </main>
-
-      <div className="relative z-50 bg-bg-dark">
-        <Footer />
       </div>
-    </div>
+
+      <ProjectModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        project={selectedProject}
+      />
+
+      <Footer />
+    </main>
   );
 }
