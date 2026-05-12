@@ -3,13 +3,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const pathname = usePathname();
   const navRef = useRef<HTMLDivElement>(null);
   const showAnim = useRef<gsap.core.Tween | null>(null);
 
@@ -47,18 +45,6 @@ const Navbar = () => {
     };
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent, id: string) => {
-    if (id === "portafolio") return;
-
-    if (pathname === "/") {
-      e.preventDefault();
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  };
-
   return (
     <nav
       ref={navRef}
@@ -84,33 +70,23 @@ const Navbar = () => {
           />
         </Link>
 
-        {/* Links */}
-        <div className="hidden md:flex ms-auto items-center gap-10 pe-10">
-          {["Portafolio", "Contacto"].map((item) => {
-            const id = item.toLowerCase();
-            const isExternal = id === "portafolio";
+        <div className="ms-auto flex items-center gap-3 md:gap-8">
+          <div className="hidden md:flex items-center gap-8 pe-2">
+            <Link
+              href="/portfolio"
+              className="text-[11px] font-bold hover:text-primary transition-colors uppercase tracking-[0.2em]"
+            >
+              Portafolio
+            </Link>
+          </div>
 
-            return (
-              <Link
-                key={item}
-                href={isExternal ? "/portfolio" : `/#${id}`}
-                onClick={(e) => handleNavClick(e, id)}
-                className="text-[11px] font-bold hover:text-primary transition-colors uppercase tracking-[0.2em]"
-              >
-                {item}
-              </Link>
-            );
-          })}
+          <Link
+            href="/contact"
+            className="px-4 md:px-6 py-2.5 rounded-full bg-primary text-bg-dark font-bold text-[11px] uppercase tracking-wider hover:scale-105 transition-all active:scale-95 shadow-lg shadow-primary/10"
+          >
+            Contacto
+          </Link>
         </div>
-
-        {/* CTA */}
-        <Link
-          href="/#contacto"
-          onClick={(e) => handleNavClick(e, "contacto")}
-          className="px-6 py-2.5 rounded-full bg-primary text-bg-dark font-bold text-[11px] uppercase tracking-wider hover:scale-105 transition-all active:scale-95 shadow-lg shadow-primary/10"
-        >
-          Consultar
-        </Link>
       </div>
     </nav>
   );

@@ -7,7 +7,6 @@ import TechCarousel from "@/components/home/TechCarousel";
 import Services from "@/components/home/Services";
 import Portfolio from "@/components/home/Portfolio";
 import Process from "@/components/home/Process";
-import ContactForm from "@/components/home/ContactForm";
 import Footer from "@/components/layout/Footer";
 
 export default function Home() {
@@ -23,7 +22,6 @@ export default function Home() {
       <Services />
       <Portfolio />
       <Process />
-      <ContactForm />
       <Footer />
     </main>
   );
