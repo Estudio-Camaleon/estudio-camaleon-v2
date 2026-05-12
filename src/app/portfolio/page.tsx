@@ -136,7 +136,7 @@ export default function PortfolioPage() {
         {hasProjects ? (
           portfolioData.map((project, index) => (
             <section
-              key={project.title}
+              key={`${project.title}-${index}`}
               className="portfolio-panel relative h-screen w-full flex items-center justify-center overflow-hidden"
             >
               <div className="absolute inset-0 bg-bg-dark shadow-[0_-30px_60px_rgba(0,0,0,0.8)] border-t border-white/5" />
