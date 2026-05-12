@@ -17,8 +17,8 @@ export const portfolioData: Project[] = [
     category: "Corporate / Portfolio",
     techStack: ["Next.js 15", "TypeScript", "Framer Motion"],
     img: "/images/proyectos/Neo_portada.webp",
-    imgLaptop: "/images/proyectos/estudio-laptop.webp",
-    imgMobile: "/images/proyectos/estudio-mobile.webp",
+    imgLaptop: "",
+    imgMobile: "",
     link: "https://estudiocamaleon.com",
   },
   {
@@ -30,7 +30,7 @@ export const portfolioData: Project[] = [
     img: "/images/proyectos/MundoAnimeTucumanPortada.png",
     imgLaptop: "",
     imgMobile: "",
-    link: "mundoanimeok.com.ar",
+    link: "https://mundoanimeok.com.ar",
   },
   {
     title: "Estudio Camaleón",
@@ -39,9 +39,9 @@ export const portfolioData: Project[] = [
     category: "Corporate / Portfolio",
     techStack: ["Next.js 15", "TypeScript", "Framer Motion"],
     img: "/images/proyectos/EstudioCamaleonPortada.png",
-    imgLaptop: "/images/proyectos/estudio-laptop.webp",
-    imgMobile: "/images/proyectos/estudio-mobile.webp",
-    link: "https://estudiocamaleon.com",
+    imgLaptop: "",
+    imgMobile: "",
+    link: "https://estudiocamaleontuc.com",
   },
   {
     title: "LynxWild",
@@ -50,8 +50,8 @@ export const portfolioData: Project[] = [
     category: "Corporate / Portfolio",
     techStack: ["Next.js 15", "TypeScript", "Framer Motion"],
     img: "/images/proyectos/LynxbioPortada.png",
-    imgLaptop: "/images/proyectos/estudio-laptop.webp",
-    imgMobile: "/images/proyectos/estudio-mobile.webp",
+    imgLaptop: "",
+    imgMobile: "",
     link: "https://estudiocamaleon.com",
   },
 ];

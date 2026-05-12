@@ -30,23 +30,17 @@ function ProjectPreview({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* MASCOTA POSICIONADA COMO LA IMAGEN:
-          - bottom-[-60px]: Para que quede "colgando" del borde inferior.
-          - left-1/2 y -translate-x-1/2: Para centrarla exactamente a la mitad del ancho.
-      */}
       <div className="absolute bottom-[-60px] left-1/2 -translate-x-1/2 z-30 w-48 h-48 pointer-events-none flex items-end justify-center">
         <MascotaSaludo active={isHovered} />
       </div>
 
-      {/* Contenedor de la Imagen: Quitamos el overflow-hidden solo si queremos que 
-          el cuerpo de la mascota se vea por fuera de la caja, 
-          pero lo mantenemos para que la imagen mantenga sus bordes redondeados. */}
       <div className="relative aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-500 group-hover:border-primary/40 group-hover:shadow-primary/5">
         <Image
           src={project.img}
           alt={project.title}
           fill
           className="object-cover transition-transform duration-700 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority={index < 2}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/60 to-transparent" />
@@ -57,7 +51,7 @@ function ProjectPreview({
 
 // --- COMPONENTE PRINCIPAL ---
 export default function PortfolioPage() {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -67,9 +61,10 @@ export default function PortfolioPage() {
     if (!hasProjects) return;
 
     const ctx = gsap.context(() => {
-      const panels = gsap.utils.toArray(".portfolio-panel");
+      // CORRECCIÓN: Tipamos el array de elementos aquí para que el forEach no falle
+      const panels = gsap.utils.toArray<HTMLElement>(".portfolio-panel");
 
-      panels.forEach((panel: any, i: number) => {
+      panels.forEach((panel, i) => {
         const isLast = i === panels.length - 1;
 
         ScrollTrigger.create({

@@ -31,9 +31,11 @@ const Navbar = () => {
       end: "max",
       onUpdate: (self) => {
         // Si scrolleamos hacia abajo, escondemos. Hacia arriba, mostramos.
-        self.direction === -1
-          ? showAnim.current?.play()
-          : showAnim.current?.reverse();
+        if (self.direction === -1) {
+          showAnim.current?.play();
+        } else {
+          showAnim.current?.reverse();
+        }
 
         // Controlamos el estado estético (fondo oscuro/transparente)
         setIsScrolled(self.scroll() > 50);

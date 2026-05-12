@@ -77,7 +77,7 @@ const Testimony = () => {
 
               {/* Contenido */}
               <p className="text-text-secondary leading-relaxed mb-6 italic">
-                "{t.content}"
+                &quot;{t.content}&quot;
               </p>
 
               {/* Autor */}
