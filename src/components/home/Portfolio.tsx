@@ -1,84 +1,101 @@
 "use client";
 
-import React from 'react';
-import { portfolioData } from '@/data/portfolio';
-import {
-  SiFramer,
-  SiMongodb,
-  SiNextdotjs,
-  SiNodedotjs,
-  SiReact,
-  SiSupabase,
-  SiTailwindcss,
-  SiTypescript,
-} from 'react-icons/si';
+import { useState } from "react";
+import Image from "next/image";
+import { portfolioData, Project } from "@/data/portfolio";
+import ProjectModal from "@/components/portfolio/ProjectModal";
 
-const techMeta = {
-  nextjs: { Icon: SiNextdotjs, label: 'Next.js', className: 'text-white' },
-  react: { Icon: SiReact, label: 'React', className: 'text-[#61DAFB]' },
-  typescript: { Icon: SiTypescript, label: 'TypeScript', className: 'text-[#3178C6]' },
-  tailwind: { Icon: SiTailwindcss, label: 'Tailwind CSS', className: 'text-[#06B6D4]' },
-  supabase: { Icon: SiSupabase, label: 'Supabase', className: 'text-[#3ECF8E]' },
-  mongodb: { Icon: SiMongodb, label: 'MongoDB', className: 'text-[#47A248]' },
-  node: { Icon: SiNodedotjs, label: 'Node.js', className: 'text-[#5FA04E]' },
-  framer: { Icon: SiFramer, label: 'Framer Motion', className: 'text-white' },
-} as const;
+export default function Portfolio() {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-const Portfolio = () => {
+  // Limitamos a los primeros 6 para la Home si tienes muchos
+  const featuredProjects = portfolioData.slice(0, 6);
+
+  const handleOpenModal = (project: Project) => {
+    setSelectedProject(project);
+    setIsModalOpen(true);
+  };
+
   return (
-    <section id="portafolio" className="py-24 bg-bg-dark">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <span className="section-badge">Portafolio</span>
-          <h2 className="title-main text-4xl md:text-5xl mb-6">Proyectos Destacados</h2>
+    <section
+      id="portfolio"
+      className="py-20 bg-bg-dark relative overflow-hidden"
+    >
+      <div className="container mx-auto px-6 relative z-10">
+        {/* Encabezado - Sin cambios visuales */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+          <div className="max-w-2xl">
+            <span className="section-badge mb-4">Portafolio</span>
+            <h2 className="text-4xl md:text-5xl font-black text-white">
+              Proyectos que impulsan <br />
+              <span className="text-gradient">negocios reales.</span>
+            </h2>
+          </div>
+          <a href="/portfolio" className="cta-button">
+            Ver todo el trabajo
+          </a>
         </div>
 
+        {/* Grid de Proyectos */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {portfolioData.map((project) => (
-            <div 
-              key={project.title}
-              className="group bg-surface-dark p-8 rounded-2xl border border-border-dark hover:border-primary transition-all duration-300"
+          {featuredProjects.map((project, index) => (
+            <div
+              key={index}
+              onClick={() => handleOpenModal(project)}
+              className="group relative bg-surface-dark rounded-3xl overflow-hidden border border-white/5 cursor-pointer transition-all duration-500 hover:border-primary/30 hover:translate-y-[-8px]"
             >
-              <div className="text-primary text-sm font-bold mb-4 uppercase tracking-widest">
-                {project.category}
+              {/* Contenedor de Imagen */}
+              <div className="relative aspect-video overflow-hidden">
+                <Image
+                  src={project.img}
+                  alt={project.title}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/90 via-bg-dark/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
               </div>
-              <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-primary transition-colors">
-                {project.title}
-              </h3>
-              <p className="text-text-secondary leading-relaxed mb-6">
-                {project.description}
-              </p>
 
-              <div className="flex flex-wrap gap-2 mb-6">
-                {project.techStack.map((techKey) => {
-                  const tech = techMeta[techKey];
+              {/* Contenido de la Tarjeta */}
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-2">
+                  <span className="text-[10px] uppercase tracking-widest text-primary font-bold">
+                    {project.category}
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-text-secondary text-sm line-clamp-2">
+                  {project.description}
+                </p>
 
-                  return (
-                    <div
-                      key={`${project.title}-${techKey}`}
-                      className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full border border-border-dark bg-bg-darker"
-                      title={tech.label}
-                      aria-label={tech.label}
+                {/* Tech Stack simplificado para la Home */}
+                <div className="flex flex-wrap gap-2 mt-4">
+                  {project.techStack.slice(0, 3).map((tech) => (
+                    <span
+                      key={tech}
+                      className="text-[9px] bg-white/5 px-2 py-1 rounded text-white/50 uppercase"
                     >
-                      <tech.Icon className={`w-4 h-4 ${tech.className}`} aria-hidden="true" />
-                      <span className="text-xs text-text-secondary">{tech.label}</span>
-                    </div>
-                  );
-                })}
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
-
-              <a 
-                href={project.link} 
-                className="inline-flex items-center text-white font-bold hover:text-primary transition-colors"
-              >
-                Ver más <span className="ml-2">→</span>
-              </a>
             </div>
           ))}
         </div>
       </div>
+
+      {/* MODAL INTEGRADO: Mismo que en la página de Portafolio */}
+      <ProjectModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        project={selectedProject}
+      />
+
+      {/* Decoración de fondo opcional */}
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
     </section>
   );
-};
-
-export default Portfolio;
+}

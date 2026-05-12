@@ -2,22 +2,35 @@
 
 import React from "react";
 import Image from "next/image";
-import { FaWhatsapp } from "react-icons/fa";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { FaWhatsapp, FaInstagram } from "react-icons/fa";
 import { FiMail, FiMapPin } from "react-icons/fi";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+  const isPortfolioPage = pathname === "/portfolio";
+
+  const handleNavClick = (e: React.MouseEvent, id: string) => {
+    if (pathname === "/") {
+      if (id === "proyectos") return;
+      e.preventDefault();
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
-    <footer className="bg-bg-dark border-t border-border-dark pt-16 pb-8">
+    <footer className="relative z-50 bg-bg-dark border-t border-border-dark pt-16 pb-8">
+      <div className="absolute inset-0 bg-bg-dark -z-10" />
+
       <div className="max-w-7xl mx-auto px-6">
-        {/* Contenido Principal */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-          {/* Logo y Descripción */}
           <div className="flex flex-col gap-4">
             <div className="relative w-48 h-12">
               <Image
-                src="/icons/Logowebjunto.svg" 
+                src="/icons/Logowebjunto.svg"
                 alt="Estudio Camaleón Logo"
                 fill
                 className="object-contain"
@@ -26,90 +39,101 @@ const Footer = () => {
             <p className="text-text-secondary leading-relaxed">
               Soluciones escalables que se adaptan a tu negocio.
             </p>
-            <a
-              href="https://www.instagram.com/estudiocamaleon.tuc/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-primary transition-colors"
-            >
-              <span className="sr-only">Instagram</span>
-              {/* Aquí puedes usar un icono de lucide-react o un SVG inline */}
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.272 2.695.072 7.053.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.778-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" />
-              </svg>
-            </a>
+            <div className="flex gap-4">
+              <a
+                href="https://www.instagram.com/estudiocamaleon.tuc/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-primary transition-all hover:scale-110"
+              >
+                <FaInstagram className="w-6 h-6" />
+              </a>
+            </div>
           </div>
 
-          
           <div>
-            <h4 className="font-bold text-white mb-6">Navegación</h4>
+            <h4 className="font-bold text-white mb-6 uppercase tracking-widest text-sm">
+              Navegación
+            </h4>
             <ul className="space-y-4 text-text-secondary">
-              {["Servicios", "Proyectos", "Proceso", "Contacto"].map((item) => (
-                <li key={item}>
-                  <a
-                    href={`#${item.toLowerCase()}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const el = document.getElementById(item.toLowerCase());
-                      if (el) el.scrollIntoView({ behavior: 'smooth' });
-                    }}
-                    className="hover:text-primary transition-colors"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
+              {["Servicios", "Portafolio", "Proceso", "Contacto"].map(
+                (item) => {
+                  const id = item.toLowerCase();
+                  const isPortfolio = id === "portafolio";
+                  return (
+                    <li key={item}>
+                      <Link
+                        href={isPortfolio ? "/portfolio" : `/#${id}`}
+                        onClick={(e) => handleNavClick(e, id)}
+                        className="hover:text-primary transition-colors inline-block"
+                      >
+                        {item}
+                      </Link>
+                    </li>
+                  );
+                },
+              )}
             </ul>
           </div>
 
-          {/* Capacidades */}
           <div>
-            <h4 className="font-bold text-white mb-6">Capacidades</h4>
+            <h4 className="font-bold text-white mb-6 uppercase tracking-widest text-sm">
+              Capacidades
+            </h4>
             <ul className="space-y-4 text-text-secondary">
               <li>Desarrollo Full-Stack</li>
               <li>Diseño UI/UX</li>
               <li>Integración de APIs</li>
+              <li>Sistemas de Gestión</li>
             </ul>
           </div>
 
-          {/* Contacto */}
           <div>
-            <h4 className="font-bold text-white mb-6">Contacto</h4>
+            <h4 className="font-bold text-white mb-6 uppercase tracking-widest text-sm">
+              Contacto
+            </h4>
             <ul className="space-y-4 text-text-secondary">
-              <li className="flex items-center gap-2">
-                <FiMapPin className="text-primary text-xl shrink-0" aria-hidden="true" />
-                Tucumán, Argentina
+              <li className="flex items-start gap-3">
+                <FiMapPin className="text-primary text-xl shrink-0 mt-1" />
+                <span>Tucumán, Argentina</span>
               </li>
-              <li className="flex items-center gap-2">
-                <FiMail className="text-primary text-xl shrink-0" aria-hidden="true" />
-                estudiocamaleontuc@gmail.com
+              <li className="flex items-center gap-3 group">
+                <FiMail className="text-primary text-xl shrink-0" />
+                <a
+                  href="mailto:estudiocamaleontuc@gmail.com"
+                  className="group-hover:text-white transition-colors"
+                >
+                  estudiocamaleontuc@gmail.com
+                </a>
               </li>
-              <li className="flex items-center gap-2">
-                <FaWhatsapp className="text-primary text-xl shrink-0" aria-hidden="true" />
-                <span>
-                  +54 9 3813 58-3226
-                </span>
+              <li className="flex items-center gap-3 group">
+                <FaWhatsapp className="text-primary text-xl shrink-0" />
+                <a
+                  href="https://wa.me/5493813583226"
+                  target="_blank"
+                  className="group-hover:text-white transition-colors"
+                >
+                  +54 9 381 358-3226
+                </a>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Copyright */}
-        <div className="pt-8 border-t border-border-dark text-center">
-          <p className="text-text-tertiary text-sm">
+        <div className="pt-8 border-t border-border-dark/50 text-center">
+          <p className="text-text-secondary/50 text-xs">
             © {currentYear} Estudio Camaleón. Todos los derechos reservados.
           </p>
         </div>
       </div>
-      {/* Botón flotante de WhatsApp */}
+
       <a
         href="https://wa.me/5493813583226"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Contactar por WhatsApp"
-        className="fixed right-4 bottom-6 md:right-8 md:bottom-8 z-50 bg-[#25D366] p-3 rounded-full shadow-lg hover:scale-105 transition-transform"
+        className="fixed right-6 bottom-6 z-[100] bg-[#25D366] p-4 rounded-full shadow-lg hover:scale-110 transition-all"
       >
-        <FaWhatsapp className="w-6 h-6 text-white" aria-hidden="true" />
+        <FaWhatsapp className="w-6 h-6 text-white" />
       </a>
     </footer>
   );
