@@ -31,9 +31,11 @@ const Navbar = () => {
       end: "max",
       onUpdate: (self) => {
         // Si scrolleamos hacia abajo, escondemos. Hacia arriba, mostramos.
-        self.direction === -1
-          ? showAnim.current?.play()
-          : showAnim.current?.reverse();
+        if (self.direction === -1) {
+          showAnim.current?.play();
+        } else {
+          showAnim.current?.reverse();
+        }
 
         // Controlamos el estado estético (fondo oscuro/transparente)
         setIsScrolled(self.scroll() > 50);
@@ -71,6 +73,15 @@ const Navbar = () => {
         </Link>
 
         <div className="ms-auto flex items-center gap-3 md:gap-8">
+          <div className="hidden md:flex items-center gap-8 pe-2">
+            <Link
+              href="/portfolio"
+              className="text-[11px] font-bold hover:text-primary transition-colors uppercase tracking-[0.2em]"
+            >
+              Servicios
+            </Link>
+          </div>
+
           <div className="hidden md:flex items-center gap-8 pe-2">
             <Link
               href="/portfolio"

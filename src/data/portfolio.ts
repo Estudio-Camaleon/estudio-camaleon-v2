@@ -7,30 +7,62 @@ export interface Project {
   imgLaptop: string;
   imgMobile: string;
   link: string;
+  // Propiedades para el control de fondos dinámicos
+  bgType: "aurora" | "none";
+  bgColor: string;
 }
 
 export const portfolioData: Project[] = [
+  {
+    title: "Neo",
+    description:
+      "Nuestra propia plataforma de soluciones digitales con enfoque en diseño visual y optimización de rendimiento.",
+    category: "Corporate / Portfolio",
+    techStack: ["Next.js 15", "TypeScript", "Framer Motion"],
+    img: "/images/proyectos/Neo_portada.webp",
+    imgLaptop: "",
+    imgMobile: "",
+    link: "",
+    bgType: "aurora",
+    bgColor: "#10B981", // Verde Esmeralda (Estilo Neo)
+  },
   {
     title: "Mundo Anime Tucumán",
     description:
       "Plataforma integral para la gestión de eventos y comunidad anime, con sistema de inscripciones y catálogo dinámico.",
     category: "Web App / Community",
     techStack: ["React 19", "Vite", "Tailwind", "GSAP"],
-    img: "/images/proyectos/aledo.png",
-    imgLaptop: "/images/proyectos/aledo.png",
-    imgMobile: "/images/proyectos/mundo-anime-mobile.webp",
-    link: "https://mundoanimetucuman.com.ar",
+    img: "/images/proyectos/MundoAnimeTucumanPortada.webp",
+    imgLaptop: "",
+    imgMobile: "",
+    link: "https://mundoanimeok.com.ar",
+    bgType: "aurora",
+    bgColor: "#a09d96", // Violeta (Estilo Anime)
   },
   {
-    title: "Estudio Camaleón Web",
+    title: "Estudio Camaleón",
     description:
       "Nuestra propia plataforma de soluciones digitales con enfoque en diseño visual y optimización de rendimiento.",
     category: "Corporate / Portfolio",
     techStack: ["Next.js 15", "TypeScript", "Framer Motion"],
-    img: "/images/proyectos/estudio-main.webp",
-    imgLaptop: "/images/proyectos/estudio-laptop.webp",
-    imgMobile: "/images/proyectos/estudio-mobile.webp",
-    link: "https://estudiocamaleon.com",
+    img: "/images/proyectos/EstudioCamaleonPortada.webp",
+    imgLaptop: "",
+    imgMobile: "",
+    link: "https://estudiocamaleontuc.com",
+    bgType: "aurora",
+    bgColor: "#39FF14", // Verde Neón (Identidad Camaleón)
   },
-  // Agrega aquí el resto de tus proyectos siguiendo esta estructura
+  {
+    title: "LynxWild",
+    description:
+      "Nuestra propia plataforma de soluciones digitales con enfoque en diseño visual y optimización de rendimiento.",
+    category: "Corporate / Portfolio",
+    techStack: ["Next.js 15", "TypeScript", "Framer Motion"],
+    img: "/images/proyectos/LynxbioPortada.webp",
+    imgLaptop: "",
+    imgMobile: "",
+    link: "",
+    bgType: "aurora",
+    bgColor: "#3B82F6", // Azul Brillante (Estilo Lynx)
+  },
 ];

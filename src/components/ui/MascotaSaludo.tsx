@@ -6,12 +6,6 @@ import gsap from "gsap";
 
 const framePath = "/images/mascota/saludo";
 
-// --- CONFIGURACIÓN DE TAMAÑOS ---
-const SIZES = {
-  frame1: { width: 100, height: 80 }, // Un poco más chico mientras está escondido
-  frame2: { width: 200, height: 190 }, // Tamaño completo al asomarse
-};
-
 interface Props {
   active?: boolean;
 }
@@ -21,16 +15,15 @@ const MascotaSaludo: React.FC<Props> = ({ active = false }) => {
   const mascotRef = useRef<HTMLDivElement>(null);
   const tl = useRef<gsap.core.Timeline | null>(null);
 
-  const currentSize = currentFrame === 1 ? SIZES.frame1 : SIZES.frame2;
-
   useEffect(() => {
-    // Creamos la línea de tiempo para el movimiento físico
+    // Creamos la línea de tiempo usando porcentajes y escalas para ser 100% responsive
     tl.current = gsap.timeline({
       paused: true,
-      defaults: { duration: 0.4, ease: "back.out(1.7)" },
+      defaults: { duration: 0.5, ease: "back.out(1.5)" },
       onUpdate: () => {
         const progress = tl.current?.progress() || 0;
-        setCurrentFrame(progress < 0.5 ? 1 : 2);
+        // Cambia al frame 2 cuando la animación va por la mitad
+        setCurrentFrame(progress < 0.4 ? 1 : 2);
       },
     });
 
@@ -38,15 +31,17 @@ const MascotaSaludo: React.FC<Props> = ({ active = false }) => {
       tl.current.fromTo(
         mascotRef.current,
         {
-          y: 100, // Sale desde abajo
-          x: 50, // Sale desde la derecha
-          rotate: 15, // Un poco inclinado
+          yPercent: 100, // 100% hacia abajo (escondido)
+          xPercent: 30, // Sale desde la derecha (30% de su propio tamaño)
+          rotate: 20, // Un poco inclinado
+          scale: 0.7, // Empieza más chico
           opacity: 0,
         },
         {
-          y: 0,
-          x: 0,
-          rotate: 0,
+          yPercent: 0, // Sube a su posición original
+          xPercent: 0, // Vuelve a su centro
+          rotate: 0, // Se endereza
+          scale: 1, // Tamaño real (el que le da el padre)
           opacity: 1,
         },
       );
@@ -66,28 +61,20 @@ const MascotaSaludo: React.FC<Props> = ({ active = false }) => {
   }, [active]);
 
   return (
-    <div
-      className="relative flex items-end justify-end overflow-hidden"
-      style={{
-        width: `${SIZES.frame2.width}px`,
-        height: `${SIZES.frame2.height}px`,
-      }}
-    >
+    // El contenedor ahora es relativo y delega el tamaño al padre (w-full h-full)
+    <div className="relative w-full h-full flex items-end justify-center overflow-hidden pointer-events-none">
       <div
         ref={mascotRef}
-        className="relative transition-all duration-300 ease-out"
-        style={{
-          width: `${currentSize.width}px`,
-          height: `${currentSize.height}px`,
-        }}
+        // origin-bottom asegura que la animación escale desde la base y no desde el centro
+        className="relative w-full h-full origin-bottom transform-gpu"
       >
         <Image
           src={`${framePath}${currentFrame}.webp`}
-          alt="Mascota Estudio Camaleón"
-          width={currentSize.width}
-          height={currentSize.height}
-          className="object-contain w-full h-full"
+          alt="Camaleón Estudio Camaleón"
+          fill // fill reemplaza width/height fijos, volviéndolo fluido
+          className="object-contain object-bottom"
           priority
+          sizes="(max-width: 768px) 150px, (max-width: 1200px) 200px, 250px"
         />
       </div>
     </div>

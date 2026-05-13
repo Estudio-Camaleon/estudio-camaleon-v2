@@ -10,12 +10,20 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "6mb",
     },
+    // @ts-expect-error - Turbopack reconoce esta propiedad pero los tipos de Next a veces fallan
+    turbo: {
+      root: ".",
+    },
   },
-  /* Aquí puedes añadir configuraciones a futuro como:
-     - Redirecciones (redirects)
-     - Headers de seguridad
-     - Dominios de imágenes permitidos
-  */
+  /* Configuración de imágenes para evitar errores de dominios externos si usas iframes/links */
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**", // Permite previsualizaciones de cualquier origen de forma segura
+      },
+    ],
+  },
 };
 
 export default withBundleAnalyzer(nextConfig);
