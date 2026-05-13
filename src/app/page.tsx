@@ -8,6 +8,7 @@ import Services from "@/components/home/Services";
 import Portfolio from "@/components/home/Portfolio";
 import Process from "@/components/home/Process";
 import Footer from "@/components/layout/Footer";
+import Testimony from "@/components/home/Testimony";
 
 export default function Home() {
   useEffect(() => {
@@ -22,6 +23,7 @@ export default function Home() {
       <Services />
       <Portfolio />
       <Process />
+      <Testimony/>
       <Footer />
     </main>
   );

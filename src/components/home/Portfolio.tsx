@@ -4,13 +4,14 @@ import { useState } from "react";
 import Image from "next/image";
 import { portfolioData, Project } from "@/data/portfolio";
 import ProjectModal from "@/components/portfolio/ProjectModal";
+import Link from "next/link";
 
 export default function Portfolio() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Limitamos a los primeros 6 para la Home si tienes muchos
-  const featuredProjects = portfolioData.slice(0, 6);
+  // LIMITACIÓN: Cambiamos de 6 a 3 para mantener la Home compacta y llamativa
+  const featuredProjects = portfolioData.slice(0, 3);
 
   const handleOpenModal = (project: Project) => {
     setSelectedProject(project);
@@ -20,62 +21,74 @@ export default function Portfolio() {
   return (
     <section
       id="portfolio"
-      className="py-20 bg-bg-dark relative overflow-hidden"
+      className="py-24 bg-bg-dark relative overflow-hidden"
     >
       <div className="container mx-auto px-6 relative z-10">
-        {/* Encabezado - Sin cambios visuales */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        {/* Encabezado */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
           <div className="max-w-2xl">
             <span className="section-badge mb-4">Portafolio</span>
-            <h2 className="text-4xl md:text-5xl font-black text-white">
+            <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
               Proyectos que impulsan <br />
               <span className="text-gradient">negocios reales.</span>
             </h2>
+            <div className="w-20 h-1 bg-primary mt-6 rounded-full" />
           </div>
-          <a href="/portfolio" className="cta-button">
+
+          <Link
+            href="/portfolio"
+            className="cta-button group flex items-center gap-2"
+          >
             Ver todo el trabajo
-          </a>
+            <span className="group-hover:translate-x-1 transition-transform">
+              →
+            </span>
+          </Link>
         </div>
 
-        {/* Grid de Proyectos */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Grid de Proyectos - Ahora solo mostrará 3 en una fila limpia */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {featuredProjects.map((project, index) => (
             <div
-              key={index}
+              key={`${project.title}-${index}`}
               onClick={() => handleOpenModal(project)}
-              className="group relative bg-surface-dark rounded-3xl overflow-hidden border border-white/5 cursor-pointer transition-all duration-500 hover:border-primary/30 hover:translate-y-[-8px]"
+              className="group relative bg-surface-dark rounded-[2rem] overflow-hidden border border-white/5 cursor-pointer transition-all duration-500 hover:border-primary/40 hover:-translate-y-3 shadow-2xl"
             >
               {/* Contenedor de Imagen */}
-              <div className="relative aspect-video overflow-hidden">
+              <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
                   src={project.img}
                   alt={project.title}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  priority={index < 3}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/90 via-bg-dark/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
-              </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-bg-dark via-bg-dark/20 to-transparent opacity-80" />
 
-              {/* Contenido de la Tarjeta */}
-              <div className="p-6">
-                <div className="flex justify-between items-start mb-2">
-                  <span className="text-[10px] uppercase tracking-widest text-primary font-bold">
+                {/* Badge de Categoría Flotante */}
+                <div className="absolute top-4 left-4">
+                  <span className="px-3 py-1 bg-bg-dark/80 backdrop-blur-md border border-white/10 rounded-full text-[9px] uppercase tracking-widest text-primary font-bold">
                     {project.category}
                   </span>
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
+              </div>
+
+              {/* Contenido de la Tarjeta */}
+              <div className="p-8">
+                <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors leading-tight">
                   {project.title}
                 </h3>
-                <p className="text-text-secondary text-sm line-clamp-2">
+                <p className="text-text-secondary text-sm line-clamp-2 mb-6">
                   {project.description}
                 </p>
 
-                {/* Tech Stack simplificado para la Home */}
-                <div className="flex flex-wrap gap-2 mt-4">
+                {/* Tech Stack simplificado */}
+                <div className="flex flex-wrap gap-2">
                   {project.techStack.slice(0, 3).map((tech) => (
                     <span
                       key={tech}
-                      className="text-[9px] bg-white/5 px-2 py-1 rounded text-white/50 uppercase"
+                      className="text-[9px] bg-white/5 border border-white/5 px-3 py-1 rounded-full text-white/40 uppercase font-medium"
                     >
                       {tech}
                     </span>
@@ -87,15 +100,15 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {/* MODAL INTEGRADO: Mismo que en la página de Portafolio */}
+      {/* Modal para ver detalles */}
       <ProjectModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         project={selectedProject}
       />
 
-      {/* Decoración de fondo opcional */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      {/* Brillo decorativo lateral */}
+      <div className="absolute -right-24 top-1/3 w-96 h-96 bg-primary/5 blur-[150px] rounded-full pointer-events-none" />
     </section>
   );
 }
