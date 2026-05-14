@@ -1,5 +1,7 @@
 "use server";
 
+import { readFile } from "fs/promises";
+import path from "path";
 import { Resend } from "resend";
 import { WelcomeEmail } from "@/components/email/WelcomeEmail";
 import { ProjectInquiryEmail } from "@/components/email/ProjectInquiryEmail";
@@ -37,6 +39,52 @@ interface EmailData {
   howDidYouKnowUs?: string;
 }
 
+const INQUIRY_IMAGE_CONTENT_ID = "inquiry-hero-image";
+const INQUIRY_LOGO_CONTENT_ID = "inquiry-logo";
+
+function getInquiryEmailImagePath() {
+  return path.join(
+    process.cwd(),
+    "public",
+    "images",
+    "mascota",
+    "ChatGPT_Image_8_may_2026_05_16_34_p.m..png",
+  );
+}
+
+function getInquiryEmailLogoPath() {
+  return path.join(
+    process.cwd(),
+    "public",
+    "icons",
+    "Logowebjunto.svg",
+  );
+}
+
+async function getInquiryEmailImageAttachment() {
+  const imagePath = getInquiryEmailImagePath();
+  const bytes = await readFile(imagePath);
+
+  return {
+    filename: "ChatGPT_Image_8_may_2026_05_16_34_p.m..png",
+    content: bytes,
+    contentType: "image/png",
+    contentId: INQUIRY_IMAGE_CONTENT_ID,
+  };
+}
+
+async function getInquiryEmailLogoAttachment() {
+  const logoPath = getInquiryEmailLogoPath();
+  const bytes = await readFile(logoPath);
+
+  return {
+    filename: "Logowebjunto.svg",
+    content: bytes,
+    contentType: "image/svg+xml",
+    contentId: INQUIRY_LOGO_CONTENT_ID,
+  };
+}
+
 export async function sendEmail(
   formData: FormData,
 ): Promise<{ success: true } | { success: false; error: string }> {
@@ -64,7 +112,12 @@ export async function sendEmail(
     let html: string;
     let subject: string;
     let email: string;
-    const attachments: Array<{ filename: string; content: Buffer }> = [];
+    const attachments: Array<{
+      filename: string;
+      content: Buffer;
+      contentType?: string;
+      contentId?: string;
+    }> = [];
 
     const files = formData.getAll("files").filter((value) => value instanceof File);
 
@@ -127,7 +180,13 @@ export async function sendEmail(
         howDidYouKnowUs,
       };
 
-      html = ProjectInquiryEmail(emailData);
+      attachments.push(await getInquiryEmailImageAttachment());
+      attachments.push(await getInquiryEmailLogoAttachment());
+
+      html = ProjectInquiryEmail(emailData, {
+        heroImageCid: INQUIRY_IMAGE_CONTENT_ID,
+        logoCid: INQUIRY_LOGO_CONTENT_ID,
+      });
       subject = `Nueva solicitud de proyecto: ${fullName}`;
     } else {
       // Formulario simple (legacy)

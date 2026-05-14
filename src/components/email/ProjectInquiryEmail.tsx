@@ -10,6 +10,11 @@ interface EmailData {
   howDidYouKnowUs?: string;
 }
 
+interface EmailOptions {
+  heroImageCid?: string;
+  logoCid?: string;
+}
+
 function escapeHtml(value: string | undefined) {
   if (!value) return "";
   return value
@@ -20,7 +25,10 @@ function escapeHtml(value: string | undefined) {
     .replace(/'/g, "&#039;");
 }
 
-export const ProjectInquiryEmail = (data: EmailData) => {
+export const ProjectInquiryEmail = (
+  data: EmailData,
+  options: EmailOptions = {},
+) => {
   const {
     fullName = "",
     email = "",
@@ -32,6 +40,8 @@ export const ProjectInquiryEmail = (data: EmailData) => {
     projectDescription = "",
     howDidYouKnowUs = "",
   } = data;
+  const heroImageCid = escapeHtml(options.heroImageCid);
+  const logoCid = escapeHtml(options.logoCid);
 
   const safeData = {
     fullName: escapeHtml(fullName),
@@ -61,13 +71,44 @@ export const ProjectInquiryEmail = (data: EmailData) => {
                 
                 <!-- Header -->
                 <tr>
-                  <td style="background:linear-gradient(135deg, #10b981 0%, #059669 100%);padding:32px 24px;text-align:center;">
-                    <h1 style="margin:0;font-size:28px;font-weight:700;color:#ffffff;">
+                  <td style="background:linear-gradient(135deg, #10b981 0%, #059669 100%);padding:24px 0;text-align:left;">
+                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:0;padding:0;">
+                      <tr>
+                        <td style="width:auto;vertical-align:middle;padding:0;">
+                          ${
+                            heroImageCid
+                              ? `<img
+                                src="cid:${heroImageCid}"
+                                alt="Mascota Estudio Camaleón"
+                                width="180"
+                                style="display:block;width:180px;height:auto;border:0;outline:none;text-decoration:none;margin:0;padding:0;"
+                              />`
+                              : ""
+                          }
+                        </td>
+                        <td style="width:100%;vertical-align:middle;text-align:right;padding-right:24px;">
+                          ${
+                            logoCid
+                              ? `<img
+                                src="cid:${logoCid}"
+                                alt="Estudio Camaleon"
+                                height="60"
+                                style="display:inline-block;height:60px;width:auto;max-width:400px;border:0;outline:none;text-decoration:none;"
+                              />`
+                              : ""
+                          }
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Título Principal -->
+                <tr>
+                  <td style="background:linear-gradient(135deg, #10b981 0%, #059669 100%);padding:0 24px 20px 24px;text-align:center;border-bottom:1px solid #059669;">
+                    <h1 style="margin:0;font-size:24px;font-weight:700;color:#ffffff;">
                       Nueva Solicitud de Proyecto
                     </h1>
-                    <p style="margin:8px 0 0 0;font-size:14px;color:#d1fae5;">
-                      Estudio Camaleon
-                    </p>
                   </td>
                 </tr>
 
@@ -79,7 +120,7 @@ export const ProjectInquiryEmail = (data: EmailData) => {
                     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom:24px;">
                       <tr>
                         <td style="font-size:16px;font-weight:700;color:#111827;margin-bottom:16px;display:block;">
-                          📋 Información de Contacto
+                          Información de Contacto
                         </td>
                       </tr>
                       <tr>
@@ -116,7 +157,7 @@ export const ProjectInquiryEmail = (data: EmailData) => {
                     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom:24px;border-top:1px solid #e5e7eb;padding-top:24px;">
                       <tr>
                         <td style="font-size:16px;font-weight:700;color:#111827;margin-bottom:16px;display:block;">
-                          🎯 Detalles del Proyecto
+                          Detalles del Proyecto
                         </td>
                       </tr>
                       ${
@@ -143,7 +184,7 @@ export const ProjectInquiryEmail = (data: EmailData) => {
                     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom:24px;border-top:1px solid #e5e7eb;padding-top:24px;">
                       <tr>
                         <td style="font-size:16px;font-weight:700;color:#111827;margin-bottom:12px;display:block;">
-                          📝 Descripción del Proyecto
+                          Descripción del Proyecto
                         </td>
                       </tr>
                       <tr>
