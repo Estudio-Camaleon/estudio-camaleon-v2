@@ -1,6 +1,12 @@
 // src/data/services.ts
 
-export type IconName = "code" | "design_services" | "api";
+export type IconName =
+  | "landing"
+  | "management"
+  | "institutional"
+  | "multipage"
+  | "ecommerce"
+  | "custom";
 
 export interface Service {
   title: string;
@@ -10,18 +16,39 @@ export interface Service {
 
 export const servicesData: Service[] = [
   {
-    title: "Desarrollo Web",
-    description: "Aplicaciones escalables con Next.js, React y bases de datos optimizadas.",
-    icon: "code",
+    title: "Landing Page",
+    description:
+      "Páginas de alto impacto pensadas para convertir visitas en consultas y ventas.",
+    icon: "landing",
   },
   {
-    title: "UI/UX Design",
-    description: "Diseño de interfaces intuitivas enfocadas en la experiencia de usuario y marca.",
-    icon: "design_services",
+    title: "Sistemas de Gestión",
+    description:
+      "Plataformas internas para organizar operaciones, procesos y datos de tu negocio.",
+    icon: "management",
   },
   {
-    title: "Integraciones API",
-    description: "Conexión eficiente con servicios externos, pagos y automatización de procesos.",
-    icon: "api",
+    title: "Web Institucional",
+    description:
+      "Sitios elegantes para presentar tu marca, servicios, trayectoria y medios de contacto.",
+    icon: "institutional",
+  },
+  {
+    title: "Web Multipágina",
+    description:
+      "Estructuras completas para proyectos que necesitan varias secciones o áreas de contenido.",
+    icon: "multipage",
+  },
+  {
+    title: "Ecommerce",
+    description:
+      "Tiendas online preparadas para mostrar productos, vender y gestionar pedidos.",
+    icon: "ecommerce",
+  },
+  {
+    title: "Proyectos Personalizados",
+    description:
+      "Desarrollos a medida según la necesidad concreta de tu marca, equipo o negocio.",
+    icon: "custom",
   },
 ];

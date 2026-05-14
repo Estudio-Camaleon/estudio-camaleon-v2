@@ -20,7 +20,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <TechCarousel />
-      <Services />
+      <Services showCtas={false} />
       <Portfolio />
       <Process />
       <Testimony/>
