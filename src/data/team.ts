@@ -23,7 +23,7 @@ export const teamData: TeamMember[] = [
     },
   },
   {
-    name: "Niconeta",
+    name: "Nicolás Moya",
     role: "Junior Full-Stack Developer",
     specialty: "Frontend Animations & GSAP",
     image: "/images/team/Nicolas.webp",
@@ -34,7 +34,7 @@ export const teamData: TeamMember[] = [
     },
   },
   {
-    name: "Maxi.1197",
+    name: "Maximiliano Figueroa",
     role: "Designer",
     specialty: "UI/UX & 3D Cards Design",
     image: "/images/team/Maxi.webp",
@@ -45,7 +45,7 @@ export const teamData: TeamMember[] = [
     },
   },
   {
-    name: "DEA",
+    name: "Darío Atencio",
     role: "Scrum & Product Marketing",
     specialty: "Agile Methodologies & Strategy",
     image: "/images/team/Dario.webp",

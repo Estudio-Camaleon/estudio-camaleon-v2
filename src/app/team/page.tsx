@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Aurora from "@/components/ui/Aurora";
@@ -8,6 +9,45 @@ import { teamData } from "@/data/team";
 import { FaGithub, FaLinkedinIn, FaInstagram, FaCode } from "react-icons/fa";
 
 export default function TeamPage() {
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const index = Number(
+            (entry.target as HTMLElement).dataset.memberIndex,
+          );
+
+          if (Number.isNaN(index)) return;
+
+          setVisibleCards((prev) => {
+            if (prev.has(index)) return prev;
+
+            const next = new Set(prev);
+            next.add(index);
+            return next;
+          });
+
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.35,
+        rootMargin: "0px 0px -10% 0px",
+      },
+    );
+
+    cardRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <main className="bg-bg-dark min-h-screen relative overflow-x-hidden">
       <Navbar />
@@ -40,6 +80,10 @@ export default function TeamPage() {
             {teamData.map((member, index) => (
               <div
                 key={member.name}
+                ref={(el) => {
+                  cardRefs.current[index] = el;
+                }}
+                data-member-index={index}
                 className="group relative animate-in fade-in zoom-in duration-700"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
@@ -51,7 +95,11 @@ export default function TeamPage() {
                       src={member.image}
                       alt={member.name}
                       fill
-                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
+                      className={`object-cover transition-all duration-700 ${
+                        visibleCards.has(index)
+                          ? "grayscale-0 scale-100"
+                          : "grayscale scale-110"
+                      } md:grayscale md:scale-110 md:group-hover:grayscale-0 md:group-hover:scale-100`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/80 via-transparent to-transparent opacity-60" />
                   </div>
