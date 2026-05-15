@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Rocket, Zap, Code2 } from "lucide-react";
+import { Zap, Code2 } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -19,14 +19,6 @@ const Hero = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-bg-dark via-bg-dark/90 to-bg-dark/40"></div>
       </div>
-
-      <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
-        <div className="absolute top-8 sm:top-12 md:top-16 lg:top-20 left-4 sm:left-8 w-1 h-1 bg-primary rounded-full opacity-40"></div>
-        <div className="absolute top-16 sm:top-24 md:top-32 right-4 sm:right-12 md:right-20 w-1 h-1 bg-primary/60 rounded-full opacity-30"></div>
-        <div className="absolute bottom-32 left-1/4 w-1 h-1 bg-primary/40 rounded-full opacity-20"></div>
-        <div className="absolute bottom-16 sm:bottom-20 right-1/3 w-1 h-1 bg-primary rounded-full opacity-35"></div>
-      </div>
-
       <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10 py-12 sm:py-16 md:py-20 lg:py-0">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-center">
           {/* LADO IZQUIERDO: TEXTO Y ACCIONES */}
@@ -50,18 +42,10 @@ const Hero = () => {
             <div className="grid grid-cols-3 gap-3 sm:gap-4 md:gap-6 py-4 sm:py-6 md:py-8">
               <div className="text-center lg:text-left">
                 <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">
-                  50+
+                  10+
                 </div>
                 <p className="text-xs sm:text-xs md:text-sm text-text-secondary font-medium">
                   Proyectos
-                </p>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary">
-                  15+
-                </div>
-                <p className="text-xs sm:text-xs md:text-sm text-text-secondary font-medium">
-                  Años
                 </p>
               </div>
               <div className="text-center lg:text-left">
@@ -99,9 +83,6 @@ const Hero = () => {
             {/* Resplandor de fondo mejorado */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] sm:w-[130%] lg:w-[140%] h-[120%] sm:h-[130%] lg:h-[140%] bg-gradient-to-r from-primary/15 to-emerald-400/10 rounded-full blur-[100px] sm:blur-[120px] lg:blur-[140px] -z-10 animate-pulse"></div>
 
-            {/* Borde decorativo sutil */}
-            <div className="absolute inset-0 rounded-xl sm:rounded-2xl border border-primary/10 -z-10"></div>
-
             <div className="relative w-full h-full max-w-none">
               <Image
                 src="/images/hero/Mockup_hero.png"
@@ -109,22 +90,11 @@ const Hero = () => {
                 width={1200}
                 height={800}
                 priority
-                /* CLAVE: 
-         - lg:scale-125: Aumenta el tamaño un 25% por encima de su contenedor en pantallas grandes.
-         - w-full h-auto: Asegura que use todo el espacio disponible.
-         - drop-shadow: Lo mantenemos para el look premium.
-      */
                 className="w-full h-full object-contain drop-shadow-[0_15px_30px_rgba(46,204,112,0.1)] sm:drop-shadow-[0_20px_40px_rgba(46,204,112,0.12)] md:drop-shadow-[0_25px_50px_rgba(46,204,112,0.15)] lg:drop-shadow-[0_25px_60px_rgba(46,204,112,0.15)] lg:scale-125 origin-center lg:origin-right transition-transform duration-500 hover:drop-shadow-[0_20px_50px_rgba(46,204,112,0.2)] sm:hover:drop-shadow-[0_25px_60px_rgba(46,204,112,0.22)] lg:hover:drop-shadow-[0_30px_70px_rgba(46,204,112,0.25)]"
               />
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Indicador de scroll mejorado */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50 z-20 animate-bounce">
-        <div className="w-[1px] h-12 bg-gradient-to-b from-primary to-transparent"></div>
-        <div className="text-xs text-text-secondary font-light">Desplázate</div>
       </div>
     </section>
   );

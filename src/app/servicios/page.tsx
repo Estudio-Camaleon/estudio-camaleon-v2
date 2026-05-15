@@ -27,9 +27,7 @@ export default function ServicesPage() {
           </p>
         </div>
       </section>
-
       <Services />
-
       <Footer />
     </main>
   );

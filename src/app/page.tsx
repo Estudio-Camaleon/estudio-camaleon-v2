@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/home/Hero";
 import TechCarousel from "@/components/home/TechCarousel";
-import Services from "@/components/home/Services";
 import Portfolio from "@/components/home/Portfolio";
 import Process from "@/components/home/Process";
 import Footer from "@/components/layout/Footer";
@@ -20,7 +19,6 @@ export default function Home() {
       <Navbar />
       <Hero />
       <TechCarousel />
-      <Services showCtas={false} />
       <Portfolio />
       <Process />
       <Testimony/>
