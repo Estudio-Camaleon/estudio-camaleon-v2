@@ -4,51 +4,7 @@ import React, { useState } from "react";
 import { FaQuoteLeft, FaStar, FaPaperPlane } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { sendEmail } from "@/app/actions/send-email";
-
-const testimonials = [
-  {
-    name: "Carlos Rodríguez",
-    content:
-      "Llegamos con una idea desordenada y el equipo nos ayudó a terminarla. En dos meses teníamos plataforma funcional.",
-    stars: 5,
-  },
-  {
-    name: "Ana Martínez",
-    content:
-      "El nivel de detalle es increíble. Nuestro negocio aumentó la venta por teléfono notablemente.",
-    stars: 5,
-  },
-  {
-    name: "Juan Pérez",
-    content:
-      "Desarrollaron un sistema interno que simplificó casi todo nuestro trabajo manual diario.",
-    stars: 5,
-  },
-  {
-    name: "Lucía Fernández",
-    content:
-      "Se involucran en el proyecto como si fuera suyo, eso hace toda la diferencia en el diseño.",
-    stars: 5,
-  },
-  {
-    name: "Maria Sanchez",
-    content:
-      "Recomendados chicos, muy profesionales en el trato y el resultado final.",
-    stars: 5,
-  },
-  {
-    name: "Mario Garcia",
-    content:
-      "Se comprometen con los plazos y lo que dicen. Transparencia total.",
-    stars: 5,
-  },
-  {
-    name: "Alexander Pineda",
-    content:
-      "Contestan rápido y la página quedó impecable. Gracias por el soporte constante.",
-    stars: 5,
-  },
-];
+import { testimoniesData } from "@/data/testimonies"; // Importación corregida
 
 const Testimony = () => {
   const [rating, setRating] = useState(5);
@@ -61,7 +17,7 @@ const Testimony = () => {
     setIsSubmitting(true);
     const formData = new FormData(e.currentTarget);
     formData.append("stars", rating.toString());
-    formData.append("projectType", "RESEÑA PÚBLICA"); // Identificador para tu server action
+    formData.append("projectType", "RESEÑA PÚBLICA");
 
     try {
       const res = await sendEmail(formData);
@@ -85,12 +41,10 @@ const Testimony = () => {
 
       <div className="max-w-[100vw] relative z-10">
         <div className="text-center mb-5 px-6">
-          <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tighter">
-            <span className="section-badge inline-block mb-4">Testimonios</span>
-          </h2>
+          <span className="section-badge inline-block mb-4">Testimonios</span>
         </div>
 
-        {/* Infinite Marquee Carrusel */}
+        {/* Infinite Marquee Carrusel - MAPEO AQUÍ */}
         <div className="flex overflow-hidden gap-6 select-none group py-10">
           <motion.div
             initial={{ x: 0 }}
@@ -98,9 +52,10 @@ const Testimony = () => {
             transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
             className="flex flex-nowrap gap-6 min-w-full"
           >
-            {[...testimonials, ...testimonials].map((t, index) => (
+            {/* Duplicamos el array para el efecto infinito visual */}
+            {[...testimoniesData, ...testimoniesData].map((t, index) => (
               <div
-                key={index}
+                key={`${t.name}-${index}`}
                 className="w-[300px] md:w-[450px] flex-shrink-0 p-8 rounded-3xl bg-surface-dark/40 border border-border-dark hover:border-primary/40 transition-all duration-300 backdrop-blur-sm"
               >
                 <div className="flex justify-between items-start mb-6">
@@ -125,7 +80,7 @@ const Testimony = () => {
           </motion.div>
         </div>
 
-        {/* Formulario para dejar reseña */}
+        {/* Formulario de Reseña */}
         <div className="max-w-4xl mx-auto px-6 mt-20">
           <div className="bg-bg-darker border border-border-dark rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden">
             <div className="absolute top-0 right-0 p-10 opacity-5">
@@ -136,7 +91,7 @@ const Testimony = () => {
               <form onSubmit={handleSubmitReview} className="relative z-10">
                 <div className="mb-8">
                   <h3 className="text-2xl font-bold text-white mb-2">
-                    ¿Trabajamos juntos?
+                    ¿Nos ayudas con tu opinión?
                   </h3>
                   <p className="text-text-secondary text-sm">
                     Tu feedback nos ayuda a seguir mutando y mejorando.
