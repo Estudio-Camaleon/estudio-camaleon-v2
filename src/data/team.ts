@@ -13,8 +13,8 @@ export interface TeamMember {
 export const teamData: TeamMember[] = [
   {
     name: "Facundo Vera",
-    role: "Junior Full-Stack Developer",
-    specialty: "Next.js & Server Actions",
+    role: "Programador Full-Stack - SEO",
+    specialty: "Frontend UI/UX",
     image: "/images/team/Facundo.webp",
     links: {
       github: "https://github.com/LynxWiLd",
@@ -24,8 +24,8 @@ export const teamData: TeamMember[] = [
   },
   {
     name: "Nicolás Moya",
-    role: "Junior Full-Stack Developer",
-    specialty: "Frontend Animations & GSAP",
+    role: "Programador Full-Stack",
+    specialty: "Backend",
     image: "/images/team/Nicolas.webp",
     links: {
       github: "https://github.com/Niconeta",
@@ -35,8 +35,8 @@ export const teamData: TeamMember[] = [
   },
   {
     name: "Maximiliano Figueroa",
-    role: "Designer",
-    specialty: "UI/UX & 3D Cards Design",
+    role: "Diseñador Multimedial",
+    specialty: "Soluciones visuales y entornos digitales.",
     image: "/images/team/Maxi.webp",
     links: {
       linkedin:
@@ -46,8 +46,8 @@ export const teamData: TeamMember[] = [
   },
   {
     name: "Darío Atencio",
-    role: "Scrum & Product Marketing",
-    specialty: "Agile Methodologies & Strategy",
+    role: "Community Manager - Scrum",
+    specialty: "Estrategia y Marketing.",
     image: "/images/team/Dario.webp",
     links: {
       linkedin: "https://www.linkedin.com/in/darioate13/",

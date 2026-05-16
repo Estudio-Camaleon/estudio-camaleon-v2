@@ -98,7 +98,10 @@ const Services = ({ showCtas = true }: ServicesProps) => {
                 <div className="relative z-10 flex h-full flex-col">
                   <div className="flex items-start justify-between gap-4 mb-6 sm:mb-8">
                     <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-dark transition-all duration-300 shrink-0">
-                      <Icon className="text-2xl sm:text-3xl" aria-hidden="true" />
+                      <Icon
+                        className="text-2xl sm:text-3xl"
+                        aria-hidden="true"
+                      />
                     </div>
                     <span className="text-[10px] uppercase tracking-[0.35em] text-text-secondary pt-1">
                       {String(index + 1).padStart(2, "0")}
