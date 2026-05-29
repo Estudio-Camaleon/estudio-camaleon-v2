@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Zap, Code2 } from "lucide-react";
+import { Zap } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -27,7 +27,7 @@ const Hero = () => {
               <h1 className="title-main text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl mb-4 sm:mb-5 md:mb-6 leading-[1.2] sm:leading-[1.15] md:leading-[1.1] tracking-tight text-white font-black">
                 Transformamos <br className="hidden sm:block" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-emerald-300 to-primary">
-                  tu visión digital en realidad
+                  tu visión digital en reality
                 </span>
               </h1>
 
@@ -63,17 +63,14 @@ const Hero = () => {
                 href="/contact"
                 className="cta-button px-6 sm:px-8 py-3 sm:py-4 bg-primary text-bg-dark font-black text-sm sm:text-base rounded-lg hover:scale-105 transition-all shadow-[0_0_30px_rgba(46,204,112,0.3)] active:scale-95 text-center inline-flex items-center justify-center gap-2 group whitespace-nowrap"
               >
-                <Zap className="w-4 h-4 flex-shrink-0 group-hover:rotate-12 transition-transform" />
-                Iniciar
-                <span>Proyecto</span>
+                Iniciar Proyecto
               </Link>
               <Link
-                href="/portfolio"
-                className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base rounded-lg font-bold border border-primary/30 text-white hover:border-primary/60 hover:bg-primary/5 transition-all text-center backdrop-blur-sm active:scale-95 inline-flex items-center justify-center gap-2 whitespace-nowrap"
+                href="/landingexpress"
+                className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base rounded-lg font-bold border border-primary/30 text-white hover:border-primary/60 hover:bg-primary/5 transition-all text-center backdrop-blur-sm active:scale-95 inline-flex items-center justify-center gap-2 group whitespace-nowrap"
               >
-                <Code2 className="w-4 h-4 flex-shrink-0" />
-                Ver
-                <span className="hidden sm:inline">Portafolio</span>
+                <Zap className="w-4 h-4 flex-shrink-0 text-primary group-hover:animate-bounce" />
+                Landing Express
               </Link>
             </div>
           </div>
