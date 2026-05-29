@@ -134,9 +134,13 @@ const ProfessionalContactForm = () => {
       } else {
         throw new Error(response.error || "Error al enviar");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       setStatus("error");
-      setErrorMessage(error.message || "Ocurrió un error inesperado.");
+      if (error instanceof Error) {
+        setErrorMessage(error.message || "Ocurrió un error inesperado.");
+      } else {
+        setErrorMessage("Ocurrió un error inesperado.");
+      }
     }
   };
 

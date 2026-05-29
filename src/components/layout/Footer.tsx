@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   FaWhatsapp,
   FaInstagram,
@@ -22,16 +21,6 @@ import {
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const pathname = usePathname();
-
-  const handleNavClick = (e: React.MouseEvent, id: string) => {
-    if (pathname === "/") {
-      if (id === "proyectos") return;
-      e.preventDefault();
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   return (
     <footer className="relative z-50 bg-bg-dark border-t border-border-dark pt-20 pb-10 overflow-hidden">
@@ -127,7 +116,6 @@ const Footer = () => {
             <ul className="space-y-4 text-text-secondary">
               {["Portafolio", "Proceso", "Contacto", "Equipo"].map((item) => {
                 const id = item.toLowerCase();
-                const isExternal = id === "portafolio" || id === "equipo";
                 const href =
                   id === "portafolio"
                     ? "/portfolio"

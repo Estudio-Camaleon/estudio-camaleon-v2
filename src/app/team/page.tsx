@@ -10,12 +10,10 @@ import {
   FaGithub,
   FaLinkedinIn,
   FaInstagram,
-  FaCode,
   FaFingerprint,
   FaLightbulb,
   FaRocket,
 } from "react-icons/fa";
-import { motion } from "framer-motion";
 
 export default function TeamPage() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
