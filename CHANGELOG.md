@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/compare/v1.1.0...v1.1.1) (2026-06-20)
+
+
+### Bug Fixes
+
+* corregir rutas de imágenes en los datos del portafolio ([cc42909](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/commit/cc4290915e2f54c9527ec95d74ebc0eecb25a247))
+
 # [1.1.0](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/compare/v1.0.0...v1.1.0) (2026-06-20)
 
 
