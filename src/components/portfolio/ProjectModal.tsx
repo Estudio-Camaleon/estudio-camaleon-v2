@@ -174,17 +174,20 @@ export default function ProjectModal({
           {view === "desktop" && (
             <div className="flex flex-col items-center transition-opacity duration-500">
               <div className="relative w-full max-w-[900px]">
-                <div className="relative aspect-[16/10] bg-[#0a0a0a] rounded-t-3xl border-[12px] md:border-[16px] border-[#111] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.8)] ring-1 ring-white/5">
-                  {project.imgLaptop ? (
-                    <Image
-                      src={project.imgLaptop}
-                      alt="Desktop preview"
-                      fill
-                      className="object-cover object-top"
-                    />
-                  ) : (
-                    <PlaceholderContent mode="Desktop" />
-                  )}
+                <div className="bg-[#0a0a0a] rounded-t-3xl border-[12px] md:border-[16px] border-[#111] shadow-[0_30px_60px_rgba(0,0,0,0.8)] ring-1 ring-white/5">
+                  <div className="relative max-h-[55vh] overflow-y-auto custom-scrollbar">
+                    {project.imgLaptop ? (
+                      <Image
+                        src={project.imgLaptop}
+                        alt="Desktop preview"
+                        width={1920}
+                        height={1080}
+                        className="w-full h-auto"
+                      />
+                    ) : (
+                      <PlaceholderContent mode="Desktop" />
+                    )}
+                  </div>
                 </div>
                 <div className="h-6 md:h-8 w-full bg-[#111] rounded-b-3xl relative border-t border-white/5 shadow-2xl">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 md:w-32 h-1.5 md:h-2 bg-[#222] rounded-b-full" />
@@ -196,21 +199,24 @@ export default function ProjectModal({
           {view === "mobile" && (
             <div className="flex flex-col items-center transition-opacity duration-500">
               <div className="relative w-[280px] md:w-[320px]">
-                <div className="relative h-[600px] md:h-[680px] w-full bg-[#0a0a0a] rounded-[3rem] border-[14px] border-[#111] overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.8)] ring-1 ring-white/5">
+                <div className="bg-[#0a0a0a] rounded-[3rem] border-[14px] border-[#111] shadow-[0_30px_60px_rgba(0,0,0,0.8)] ring-1 ring-white/5">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-[#111] z-20 rounded-b-[1.5rem] flex items-center justify-center">
                     <div className="w-2.5 h-2.5 rounded-full bg-black border border-white/10" />
                   </div>
 
-                  {project.imgMobile ? (
-                    <Image
-                      src={project.imgMobile}
-                      alt="Mobile preview"
-                      fill
-                      className="object-cover object-top"
-                    />
-                  ) : (
-                    <PlaceholderContent mode="Mobile" />
-                  )}
+                  <div className="relative max-h-[60vh] overflow-y-auto custom-scrollbar pt-8">
+                    {project.imgMobile ? (
+                      <Image
+                        src={project.imgMobile}
+                        alt="Mobile preview"
+                        width={390}
+                        height={844}
+                        className="w-full h-auto"
+                      />
+                    ) : (
+                      <PlaceholderContent mode="Mobile" />
+                    )}
+                  </div>
                 </div>
                 <div className="absolute -left-3.5 top-28 w-1 h-14 bg-[#111] rounded-l-md" />
                 <div className="absolute -right-3.5 top-36 w-1 h-20 bg-[#111] rounded-r-md" />

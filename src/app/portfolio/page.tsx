@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { portfolioData, Project } from "@/data/portfolio";
@@ -17,6 +17,16 @@ export default function PortfolioPage() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const completedProjects = useMemo(
+    () => portfolioData.filter((p) => p.status === "completed"),
+    [],
+  );
+
+  const developmentProjects = useMemo(
+    () => portfolioData.filter((p) => p.status === "development"),
+    [],
+  );
 
   const hasProjects = portfolioData && portfolioData.length > 0;
 
@@ -93,21 +103,70 @@ export default function PortfolioPage() {
 
       {/* Renderizado de los Paneles */}
       <div className="relative z-10">
-        {hasProjects ? (
-          portfolioData.map((project, index) => (
-            <ProjectPanel
-              key={`${project.title}-${index}`}
-              project={project}
-              index={index}
-              onOpenModal={handleOpenModal}
-            />
-          ))
-        ) : (
+        {!hasProjects ? (
           <div className="h-[40vh] flex items-center justify-center text-white">
             <p className="bg-surface-dark px-8 py-4 rounded-2xl border border-white/5 shadow-2xl">
               Próximamente más proyectos...
             </p>
           </div>
+        ) : (
+          <>
+            {/* Sección: Proyectos Realizados */}
+            {completedProjects.length > 0 && (
+              <>
+                <div className="relative h-[60vh] md:h-[80vh] flex flex-col items-center justify-center text-center px-4">
+                  <span className="section-badge animate-fade-in mb-6">
+                    Portafolio
+                  </span>
+                  <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter">
+                    Proyectos{" "}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">
+                      Realizados
+                    </span>
+                  </h2>
+                  <p className="text-text-secondary text-base md:text-lg max-w-xl mx-auto mt-4 font-light">
+                    Soluciones digitales que ya están en producción.
+                  </p>
+                </div>
+                {completedProjects.map((project, index) => (
+                  <ProjectPanel
+                    key={project.title}
+                    project={project}
+                    index={index}
+                    onOpenModal={handleOpenModal}
+                  />
+                ))}
+              </>
+            )}
+
+            {/* Sección: Proyectos en Desarrollo */}
+            {developmentProjects.length > 0 && (
+              <>
+                <div className="relative h-[60vh] md:h-[80vh] flex flex-col items-center justify-center text-center px-4">
+                  <span className="section-badge animate-fade-in mb-6">
+                    Próximamente
+                  </span>
+                  <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tighter">
+                    Proyectos en{" "}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
+                      Desarrollo
+                    </span>
+                  </h2>
+                  <p className="text-text-secondary text-base md:text-lg max-w-xl mx-auto mt-4 font-light">
+                    Proyectos en los que estamos trabajando actualmente.
+                  </p>
+                </div>
+                {developmentProjects.map((project, index) => (
+                  <ProjectPanel
+                    key={project.title}
+                    project={project}
+                    index={completedProjects.length + index}
+                    onOpenModal={handleOpenModal}
+                  />
+                ))}
+              </>
+            )}
+          </>
         )}
       </div>
 
