@@ -71,9 +71,19 @@ export default function ProjectPanel({
             <span className="text-primary font-bold text-[10px] md:text-xs uppercase tracking-[0.4em] block">
               {project.category}
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tighter drop-shadow-lg">
-              {project.title}
-            </h2>
+            <div className="flex items-center gap-3 flex-wrap">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] tracking-tighter drop-shadow-lg">
+                {project.title}
+              </h2>
+              {project.status === "development" && (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-amber-500/15 border border-amber-400/30 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                  <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-amber-300">
+                    En Desarrollo
+                  </span>
+                </span>
+              )}
+            </div>
           </div>
 
           <p className="text-text-secondary text-base md:text-lg leading-relaxed font-light max-w-xl">

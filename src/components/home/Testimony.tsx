@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   FaQuoteLeft,
@@ -9,7 +9,11 @@ import {
   FaCheckCircle,
   FaExclamationTriangle,
 } from "react-icons/fa";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+} from "framer-motion";
 import { sendReviewEmail } from "@/app/actions/send-review";
 import { testimoniesData } from "@/data/testimonies";
 
@@ -40,6 +44,37 @@ const Testimony = () => {
   });
 
   const currentRating = watch("stars");
+  const x = useMotionValue(0);
+  const isPaused = useRef(false);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const speed = 2;
+
+    const animate = () => {
+      if (!isPaused.current) {
+        const el = wrapperRef.current;
+        if (el) {
+          const halfW = el.scrollWidth / 2;
+          if (halfW > 0) {
+            const currentX = x.get();
+            let newX = currentX - speed;
+            if (newX <= -halfW) {
+              newX += halfW;
+            }
+            x.set(newX);
+          }
+        }
+      }
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [x]);
 
   const onSubmitReview = async (data: ReviewFormInputs) => {
     setIsSubmitting(true);
@@ -91,17 +126,23 @@ const Testimony = () => {
         {/* Infinite Marquee Carrusel */}
         <div className="flex overflow-hidden gap-6 select-none group py-10">
           <motion.div
-            initial={{ x: 0 }}
-            animate={{ x: "-50%" }}
-            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-            className="flex flex-nowrap gap-6 min-w-full"
+            ref={wrapperRef}
+            style={{ x }}
+            drag="x"
+            onDragStart={() => {
+              isPaused.current = true;
+            }}
+            onDragEnd={() => {
+              isPaused.current = false;
+            }}
+            className="flex flex-nowrap gap-6 min-w-full cursor-grab active:cursor-grabbing"
           >
             {[...testimoniesData, ...testimoniesData].map((t, index) => (
               <div
                 key={`${t.name}-${index}`}
                 // Oculta la segunda mitad duplicada de los lectores de pantalla para evitar redundancia
                 aria-hidden={index >= testimoniesData.length}
-                className="w-[300px] md:w-[450px] flex-shrink-0 p-8 rounded-3xl bg-surface-dark/40 border border-border-dark hover:border-primary/40 transition-all duration-300 backdrop-blur-sm"
+                className="w-[300px] md:w-[450px] flex-shrink-0 p-8 rounded-3xl bg-surface-dark/40 border border-border-dark hover:border-primary/40 transition-all duration-300 backdrop-blur-sm pointer-events-none"
               >
                 <div className="flex justify-between items-start mb-6">
                   <div className="flex gap-1">
