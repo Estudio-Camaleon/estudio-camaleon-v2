@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/compare/v1.0.0...v1.1.0) (2026-06-20)
+
+
+### Features
+
+* add sharp for image optimization and update portfolio data ([ed6756f](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/commit/ed6756f783d5c854358c6489e93d49a530f3e869))
+* update portfolio data with project info, add repo links and GitHub button ([4f9fdb5](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/commit/4f9fdb5de233158d223324a5a55e1693cde76847))
+
 # 1.0.0 (2026-06-20)
 
 
