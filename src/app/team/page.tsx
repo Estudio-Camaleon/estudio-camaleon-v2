@@ -9,7 +9,7 @@ import { teamData } from "@/data/team";
 import {
   FaGithub,
   FaLinkedinIn,
-  FaInstagram,
+  FaEnvelope,
   FaFingerprint,
   FaLightbulb,
   FaRocket,
@@ -95,7 +95,7 @@ export default function TeamPage() {
             </div>
             <div className="relative aspect-video lg:aspect-square rounded-[3rem] overflow-hidden border border-white/10 animate-in fade-in zoom-in duration-1000 shadow-2xl shadow-primary/5">
               <Image
-                src="/images/team/img/historia.png"
+                src="/images/team/img/historia.webp"
                 alt="Estudio Camaleón Historia"
                 fill
                 className="object-cover opacity-60"
@@ -153,10 +153,10 @@ export default function TeamPage() {
                     cardRefs.current[index] = el;
                   }}
                   data-member-index={index}
-                  className="group relative animate-in fade-in slide-in-from-bottom-8 duration-700"
+                  className="group relative animate-in fade-in slide-in-from-bottom-8 duration-700 flex flex-col"
                   style={{ animationDelay: `${index * 150}ms` }}
                 >
-                  <div className="relative bg-surface-dark/40 backdrop-blur-md border border-white/5 rounded-[2.5rem] p-8 transition-all duration-500 group-hover:border-primary/30 group-hover:bg-surface-dark/60 overflow-hidden">
+                  <div className="relative bg-surface-dark/40 backdrop-blur-md border border-white/5 rounded-[2.5rem] p-8 transition-all duration-500 group-hover:border-primary/30 group-hover:bg-surface-dark/60 overflow-hidden flex flex-col h-full">
                     {/* Image Profile con efecto Camaleón */}
                     <div className="relative w-full aspect-square rounded-3xl overflow-hidden mb-6 border border-white/5 group-hover:border-primary/20 transition-colors">
                       <Image
@@ -170,7 +170,7 @@ export default function TeamPage() {
                       <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/90 via-transparent to-transparent opacity-60" />
                     </div>
 
-                    <div className="space-y-1 mb-6 relative z-10">
+                    <div className="space-y-1 mb-6 relative z-10 flex-1">
                       <h3 className="text-white font-black text-xl tracking-tight uppercase group-hover:text-primary transition-colors">
                         {member.name}
                       </h3>
@@ -201,13 +201,12 @@ export default function TeamPage() {
                           <FaLinkedinIn className="w-5 h-5" />
                         </a>
                       )}
-                      {member.links.instagram && (
+                      {member.links.email && (
                         <a
-                          href={member.links.instagram}
-                          target="_blank"
-                          className="text-white/40 hover:text-pink-500 transition-colors"
+                          href={`mailto:${member.links.email}`}
+                          className="text-white/40 hover:text-primary transition-colors"
                         >
-                          <FaInstagram className="w-5 h-5" />
+                          <FaEnvelope className="w-5 h-5" />
                         </a>
                       )}
                     </div>

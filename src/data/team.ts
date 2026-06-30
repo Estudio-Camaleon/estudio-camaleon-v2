@@ -6,7 +6,7 @@ export interface TeamMember {
   links: {
     github?: string;
     linkedin?: string;
-    instagram?: string;
+    email?: string;
   };
 }
 
@@ -19,7 +19,7 @@ export const teamData: TeamMember[] = [
     links: {
       github: "https://github.com/LynxWiLd",
       linkedin: "https://www.linkedin.com/in/vera-facundo/",
-      instagram: "https://www.instagram.com/facundovera647",
+      email: "facundovera647@gmail.com",
     },
   },
   {
@@ -30,7 +30,7 @@ export const teamData: TeamMember[] = [
     links: {
       github: "https://github.com/Niconeta",
       linkedin: "https://www.linkedin.com/in/nicol%C3%A1smoya7991/",
-      instagram: "https://www.instagram.com/nicolasmoya._",
+      email: "moyanico044@gmail.com",
     },
   },
   {
@@ -41,7 +41,7 @@ export const teamData: TeamMember[] = [
     links: {
       linkedin:
         "https://www.linkedin.com/in/luis-maximiliano-figueroa-a6a6792b4/",
-      instagram: "https://www.instagram.com/maxi_1197_",
+      email: "luismaximilianof@gmail.com",
     },
   },
   {
@@ -51,7 +51,7 @@ export const teamData: TeamMember[] = [
     image: "/images/team/Dario.webp",
     links: {
       linkedin: "https://www.linkedin.com/in/darioate13/",
-      instagram: "https://www.instagram.com/darioate13",
+      email: "darioatencio23@gmail.com",
     },
   },
 ];
