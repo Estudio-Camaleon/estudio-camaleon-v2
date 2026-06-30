@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/compare/v1.1.1...v1.2.0) (2026-06-30)
+
+
+### Features
+
+* redesign team section - replace instagram with email, equal card heights ([30b66d6](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/commit/30b66d6237f8829d2c476cc80dd411f1ffd503bd))
+
 ## [1.1.1](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/compare/v1.1.0...v1.1.1) (2026-06-20)
 
 
