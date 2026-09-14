@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/compare/v1.2.1...v1.2.2) (2026-09-14)
+
+
+### Bug Fixes
+
+* **responsive:** fix responsive issues across all pages ([57c9175](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/commit/57c91758600264988975fc668717936d2b6c0aa9))
+
 ## [1.2.1](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/compare/v1.2.0...v1.2.1) (2026-09-14)
 
 
