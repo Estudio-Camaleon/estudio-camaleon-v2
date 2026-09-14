@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Project } from "@/data/portfolio";
 import MascotaSaludo from "@/components/ui/MascotaSaludo";
 import ProjectBackground from "./ProjectBackgrounds";
+import { useInView } from "@/hooks/useInView";
 
 interface ProjectPanelProps {
   project: Project;
@@ -12,56 +13,49 @@ interface ProjectPanelProps {
   onOpenModal: (project: Project) => void;
 }
 
-export default function ProjectPanel({
+const ProjectPanel = React.memo(function ProjectPanel({
   project,
   index,
   onOpenModal,
 }: ProjectPanelProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const { ref: panelRef, isInView } = useInView({ rootMargin: "100px", once: false });
 
   return (
-    <section className="portfolio-panel relative h-[100dvh] w-full flex items-center justify-center overflow-hidden bg-bg-dark z-10 transform-gpu">
-      {/* CORRECCIÓN VITAL: bg-bg-dark y transform-gpu evitan el bug de GSAP */}
-
-      {/* Gestor del Fondo de React Bits */}
+    <section
+      ref={panelRef}
+      className="portfolio-panel relative h-[100dvh] w-full flex items-center justify-center overflow-hidden bg-bg-dark z-10 transform-gpu"
+    >
       <ProjectBackground
         type={project.bgType || "none"}
         color={project.bgColor}
+        paused={!isInView}
       />
 
-      {/* --- DIFUMINADO DE BORDES (FEATHERING) --- */}
-      {/* Suavizado del borde superior */}
       <div className="absolute top-0 left-0 w-full h-32 md:h-48 bg-gradient-to-b from-bg-dark via-bg-dark/80 to-transparent pointer-events-none z-10" />
-
-      {/* Suavizado del borde inferior */}
       <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 bg-gradient-to-t from-bg-dark via-bg-dark/80 to-transparent pointer-events-none z-10" />
-      {/* ---------------------------------------- */}
 
-      {/* Contenido */}
       <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-20 py-24 md:py-0">
         <div
           className={`relative group ${index % 2 !== 0 ? "md:order-2" : ""}`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* 
-              CONTENEDOR DE LA MASCOTA RESPONSIVE 
-              - Celular (default): w-32 h-32, bottom -30px
-              - Tablet (md): w-48 h-48, bottom -50px
-              - Laptop (lg): w-56 h-56, bottom -60px
-          */}
           <div className="absolute bottom-[-20px] md:bottom-[-20px] lg:bottom-[-35px] left-1/2 -translate-x-1/2 z-30 w-32 h-32 md:w-35 md:h-35 lg:w-56 lg:h-56 pointer-events-none flex items-end justify-center">
-            <MascotaSaludo active={isHovered} />
+            {isInView && <MascotaSaludo active={isHovered} />}
           </div>
 
           <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:border-primary/40 group-hover:shadow-[0_0_40px_rgba(57,255,20,0.15)] bg-black">
-            <Image
-              src={project.img}
-              alt={project.title}
-              fill
-              className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-90 group-hover:opacity-100"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
+            {isInView && (
+              <Image
+                src={project.img}
+                alt={project.title}
+                fill
+                className="object-cover transition-transform duration-1000 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                loading="lazy"
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-bg-dark/90 via-transparent to-transparent opacity-80" />
           </div>
         </div>
@@ -126,4 +120,6 @@ export default function ProjectPanel({
       </div>
     </section>
   );
-}
+});
+
+export default ProjectPanel;

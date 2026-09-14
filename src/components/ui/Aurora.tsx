@@ -7,7 +7,8 @@ interface AuroraProps {
   colorStops?: string[];
   amplitude?: number;
   blend?: number;
-  speed?: number; // Nueva propiedad para controlar la velocidad de la animación
+  speed?: number;
+  paused?: boolean;
 }
 
 const Aurora = ({
@@ -15,31 +16,40 @@ const Aurora = ({
   amplitude = 1.4,
   blend = 1,
   speed = 1.0,
+  paused = false,
 }: AuroraProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isReady, setIsReady] = useState(false);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const animationRef = useRef<number>(0);
+  const materialRef = useRef<THREE.ShaderMaterial | null>(null);
+  const pausedRef = useRef(paused);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+
+    rendererRef.current = renderer;
 
     const container = containerRef.current;
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Optimización de rendimiento
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     container.appendChild(renderer.domElement);
 
-    // Lógica para asegurar que si se pasa el mismo color, haya variación visible
     const baseColor = new THREE.Color(colorStops[0]);
     const secondaryColor =
       colorStops.length > 1 && colorStops[0] !== colorStops[1]
         ? new THREE.Color(colorStops[1])
-        : new THREE.Color(colorStops[0]).offsetHSL(0.05, 0.2, 0.15); // Desplaza ligeramente el tono/brillo
+        : new THREE.Color(colorStops[0]).offsetHSL(0.05, 0.2, 0.15);
 
-    // Geometría y Shaders Premium para el efecto Aurora
-    const geometry = new THREE.PlaneGeometry(2, 2, 128, 128);
+    const geometry = new THREE.PlaneGeometry(2, 2, 64, 64);
     const material = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
@@ -55,7 +65,6 @@ const Aurora = ({
         void main() {
           vUv = uv;
           vec3 pos = position;
-          // Movimiento de olas más orgánico y fluido
           float noise = sin(pos.x * 2.5 + uTime * 0.4) * cos(pos.y * 2.0 + uTime * 0.3);
           pos.z += noise * 0.25 * uAmplitude;
           gl_Position = vec4(pos, 1.0);
@@ -71,25 +80,19 @@ const Aurora = ({
         void main() {
           vec2 uv = vUv;
           
-          // Distorsión de las coordenadas UV para efecto de líquido/humo
           uv.x += sin(uv.y * 3.0 + uTime * 0.3) * 0.1;
           uv.y += cos(uv.x * 3.0 + uTime * 0.2) * 0.1;
 
-          // Creación de las "cintas" de luz (Ribbons)
           float ribbon1 = sin(uv.x * 8.0 + uTime * 0.8) * 0.5 + 0.5;
           float ribbon2 = cos(uv.y * 6.0 - uTime * 1.1) * 0.5 + 0.5;
 
-          // Máscara de mezcla dinámica
           float mask = smoothstep(0.2, 0.8, ribbon1 * ribbon2 * uBlend);
 
-          // Color base dinámico
           vec3 color = mix(uColor1, uColor2, mask + sin(uTime * 0.2) * 0.1);
 
-          // Añadir brillo intenso en los picos de las ondas (Glow)
           float glow = smoothstep(0.75, 1.0, ribbon1) * 0.5;
           color += uColor2 * glow;
 
-          // Desvanecimiento radial (Vignette invertida) para que los bordes sean suaves
           float dist = distance(vUv, vec2(0.5));
           float alpha = smoothstep(0.5, 0.05, dist);
 
@@ -98,23 +101,27 @@ const Aurora = ({
       `,
       transparent: true,
       blending: THREE.AdditiveBlending,
-      depthWrite: false, // Optimización para renderizado de transparencias
+      depthWrite: false,
     });
+
+    materialRef.current = material;
 
     const mesh = new THREE.Mesh(geometry, material);
     scene.add(mesh);
     camera.position.z = 1;
 
-    // Loop de animación
-    let animationFrameId: number;
+    let lastTime = 0;
     const animate = (time: number) => {
-      material.uniforms.uTime.value = time * 0.001 * speed; // Aplicamos el factor de velocidad
-      renderer.render(scene, camera);
-      animationFrameId = requestAnimationFrame(animate);
+      if (!pausedRef.current) {
+        const delta = time - lastTime;
+        material.uniforms.uTime.value += delta * 0.001 * speed;
+        renderer.render(scene, camera);
+        lastTime = time;
+      }
+      animationRef.current = requestAnimationFrame(animate);
     };
-    animate(0);
+    animationRef.current = requestAnimationFrame(animate);
 
-    // Fade-in activado al montar todo
     requestAnimationFrame(() => setIsReady(true));
 
     const handleResize = () => {
@@ -123,16 +130,15 @@ const Aurora = ({
     };
     window.addEventListener("resize", handleResize);
 
-    // Cleanup profundo para evitar memory leaks
     return () => {
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(animationFrameId);
+      cancelAnimationFrame(animationRef.current);
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
       geometry.dispose();
       material.dispose();
-      renderer.dispose(); // Vital en Next.js
+      renderer.dispose();
     };
   }, [colorStops, amplitude, blend, speed]);
 

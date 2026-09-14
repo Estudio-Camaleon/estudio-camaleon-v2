@@ -1,34 +1,36 @@
 "use client";
 
 import React from "react";
-// Importamos tu componente de Aurora
 import Aurora from "@/components/ui/Aurora";
+import { useInView } from "@/hooks/useInView";
 
 interface ProjectBackgroundProps {
   type: "aurora" | "none";
   color?: string;
+  paused?: boolean;
 }
 
 export default function ProjectBackground({
   type,
   color = "#10B981",
+  paused = false,
 }: ProjectBackgroundProps) {
+  const { ref, isInView } = useInView({ rootMargin: "300px", once: false });
+
   if (type === "none") return null;
 
   return (
-    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-      {/* Fondo de Aurora de React Bits */}
-      {type === "aurora" && (
+    <div ref={ref} className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      {type === "aurora" && isInView && (
         <div className="absolute inset-0 w-full h-full mix-blend-screen opacity-80">
           <Aurora
-            colorStops={[color, color]} // Usamos el formato que pide React Bits
+            colorStops={[color, color]}
             amplitude={1.4}
             blend={1}
+            paused={paused}
           />
         </div>
       )}
-
-      {/* Overlay oscuro para no perder legibilidad del texto */}
       <div className="absolute inset-0 bg-bg-dark/50" />
     </div>
   );

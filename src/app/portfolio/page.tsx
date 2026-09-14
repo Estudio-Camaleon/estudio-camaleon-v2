@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { portfolioData, Project } from "@/data/portfolio";
@@ -52,10 +52,14 @@ export default function PortfolioPage() {
     return () => ctx.revert();
   }, [hasProjects]);
 
-  const handleOpenModal = (project: Project) => {
+  const handleOpenModal = useCallback((project: Project) => {
     setSelectedProject(project);
     setIsModalOpen(true);
-  };
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
 
   return (
     <main
@@ -172,7 +176,7 @@ export default function PortfolioPage() {
 
       <ProjectModal
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={handleCloseModal}
         project={selectedProject}
       />
 
