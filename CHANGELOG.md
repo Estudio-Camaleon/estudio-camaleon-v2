@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/compare/v1.2.0...v1.2.1) (2026-09-14)
+
+
+### Performance Improvements
+
+* **portfolio:** optimize rendering performance with lazy loading and memoization ([476b82a](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/commit/476b82ab8206255492c45aee097e136118491adf))
+
 # [1.2.0](https://github.com/Estudio-Camaleon/estudio-camaleon-v2/compare/v1.1.1...v1.2.0) (2026-06-30)
 
 
