@@ -35,13 +35,13 @@ const ProjectPanel = React.memo(function ProjectPanel({
       <div className="absolute top-0 left-0 w-full h-32 md:h-48 bg-gradient-to-b from-bg-dark via-bg-dark/80 to-transparent pointer-events-none z-10" />
       <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 bg-gradient-to-t from-bg-dark via-bg-dark/80 to-transparent pointer-events-none z-10" />
 
-      <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-20 py-24 md:py-0">
+      <div className="container mx-auto px-6 grid md:grid-cols-2 gap-8 md:gap-12 items-center relative z-20 py-24 md:py-0">
         <div
           className={`relative group ${index % 2 !== 0 ? "md:order-2" : ""}`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          <div className="absolute bottom-[-20px] md:bottom-[-20px] lg:bottom-[-35px] left-1/2 -translate-x-1/2 z-30 w-32 h-32 md:w-35 md:h-35 lg:w-56 lg:h-56 pointer-events-none flex items-end justify-center">
+          <div className="absolute bottom-[-20px] md:bottom-[-20px] lg:bottom-[-35px] left-1/2 -translate-x-1/2 z-30 w-32 h-32 md:w-36 md:h-36 lg:w-56 lg:h-56 pointer-events-none flex items-end justify-center">
             {isInView && <MascotaSaludo active={isHovered} />}
           </div>
 

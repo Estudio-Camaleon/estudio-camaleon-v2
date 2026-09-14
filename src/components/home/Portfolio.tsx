@@ -75,7 +75,7 @@ export default function Portfolio() {
               </div>
 
               {/* Contenido de la Tarjeta */}
-              <div className="p-8">
+              <div className="p-6 sm:p-8">
                 <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-primary transition-colors leading-tight">
                   {project.title}
                 </h3>

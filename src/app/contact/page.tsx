@@ -33,7 +33,7 @@ export default function ContactPage() {
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
           <div className="relative z-10 max-w-xl">
-            <h1 className="text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-8 tracking-tighter">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-white leading-[1.1] mb-8 tracking-tighter">
               Hagamos algo <br />
               <span className="text-primary italic">legendario.</span>
             </h1>
@@ -43,7 +43,7 @@ export default function ContactPage() {
             </p>
 
             {/* Beneficios en Mini-Grid */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {benefits.map((item, i) => (
                 <div
                   key={i}

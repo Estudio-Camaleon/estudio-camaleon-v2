@@ -71,10 +71,10 @@ export default function TeamPage() {
 
       <div className="relative z-10">
         {/* HERO: HISTORIA */}
-        <section className="pt-32 pb-20 px-6">
+        <section className="pt-24 sm:pt-32 pb-12 sm:pb-20 px-6">
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="animate-in fade-in slide-in-from-left-8 duration-1000">
-              <h1 className="text-5xl md:text-7xl mb-8 text-white font-black tracking-tighter leading-none">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl mb-8 text-white font-black tracking-tighter leading-none">
                 Vimos una{" "}
                 <span className="text-primary italic">posibilidad</span>
               </h1>
@@ -93,7 +93,7 @@ export default function TeamPage() {
                 Debería sentirse viva.
               </p>
             </div>
-            <div className="relative aspect-video lg:aspect-square rounded-[3rem] overflow-hidden border border-white/10 animate-in fade-in zoom-in duration-1000 shadow-2xl shadow-primary/5">
+            <div className="relative aspect-video lg:aspect-square rounded-2xl sm:rounded-3xl lg:rounded-[3rem] overflow-hidden border border-white/10 animate-in fade-in zoom-in duration-1000 shadow-2xl shadow-primary/5">
               <Image
                 src="/images/team/img/historia.webp"
                 alt="Estudio Camaleón Historia"
@@ -106,10 +106,10 @@ export default function TeamPage() {
         </section>
 
         {/* SECCIÓN: FILOSOFÍA (ADAPTABILIDAD) */}
-        <section className="py-24 px-6 bg-surface-dark/20 backdrop-blur-sm border-y border-white/5">
+        <section className="py-16 sm:py-24 px-6 bg-surface-dark/20 backdrop-blur-sm border-y border-white/5">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-6xl font-black text-white tracking-tighter mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-black text-white tracking-tighter mb-4">
                 ADN <span className="text-primary">Camaleón</span>
               </h2>
               <p className="text-text-secondary uppercase tracking-[0.3em] text-xs font-bold">
@@ -121,7 +121,7 @@ export default function TeamPage() {
               {philosophy.map((item, i) => (
                 <div
                   key={i}
-                  className="p-10 rounded-[3rem] bg-bg-dark/40 border border-white/5 hover:border-primary/40 transition-all duration-500 group"
+                  className="p-6 sm:p-10 rounded-2xl sm:rounded-[3rem] bg-bg-dark/40 border border-white/5 hover:border-primary/40 transition-all duration-500 group"
                 >
                   <item.icon className="text-4xl text-primary mb-6 group-hover:scale-110 transition-transform" />
                   <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">
@@ -140,7 +140,7 @@ export default function TeamPage() {
         <section id="equipo" className="py-10 px-6">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20">
-              <h2 className="text-5xl md:text-7xl text-white font-black tracking-tighter">
+              <h2 className="text-4xl sm:text-5xl md:text-7xl text-white font-black tracking-tighter">
                 El <span className="text-primary">Equipo</span>
               </h2>
             </div>
@@ -156,7 +156,7 @@ export default function TeamPage() {
                   className="group relative animate-in fade-in slide-in-from-bottom-8 duration-700 flex flex-col"
                   style={{ animationDelay: `${index * 150}ms` }}
                 >
-                  <div className="relative bg-surface-dark/40 backdrop-blur-md border border-white/5 rounded-[2.5rem] p-8 transition-all duration-500 group-hover:border-primary/30 group-hover:bg-surface-dark/60 overflow-hidden flex flex-col h-full">
+                  <div className="relative bg-surface-dark/40 backdrop-blur-md border border-white/5 rounded-[2rem] sm:rounded-[2.5rem] p-6 sm:p-8 transition-all duration-500 group-hover:border-primary/30 group-hover:bg-surface-dark/60 overflow-hidden flex flex-col h-full">
                     {/* Image Profile con efecto Camaleón */}
                     <div className="relative w-full aspect-square rounded-3xl overflow-hidden mb-6 border border-white/5 group-hover:border-primary/20 transition-colors">
                       <Image

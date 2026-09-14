@@ -30,7 +30,7 @@ export default function TemplatesCatalog() {
           Estructuras que venden
         </span>
 
-        <h2 className="title-main text-3xl md:text-5xl mb-4">
+        <h2 className="title-main text-3xl sm:text-4xl md:text-5xl mb-4">
           Elegí la estructura que va a empezar a generarte{" "}
           <span className="text-primary">clientes en 48 hs</span>
         </h2>
@@ -148,10 +148,10 @@ export default function TemplatesCatalog() {
         </Swiper>
 
         {/* NAV */}
-        <button className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2">
+        <button className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 hidden md:block">
           ←
         </button>
-        <button className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2">
+        <button className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 hidden md:block">
           →
         </button>
       </div>

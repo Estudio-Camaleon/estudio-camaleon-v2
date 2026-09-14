@@ -115,7 +115,7 @@ const Testimony = () => {
     >
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-30">
-        <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[140px]" />
+        <div className="absolute top-1/4 left-0 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-primary/10 rounded-full blur-[140px]" />
       </div>
 
       <div className="max-w-[100vw] relative z-10">
@@ -293,7 +293,7 @@ const Testimony = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-primary hover:bg-primary-dark text-dark font-black px-10 py-4 rounded-2xl transition-all flex items-center gap-3 disabled:opacity-50 cursor-pointer shadow-lg shadow-primary/10"
+                    className="bg-primary hover:bg-primary-dark text-dark font-black px-6 sm:px-10 py-4 rounded-2xl transition-all flex items-center gap-3 disabled:opacity-50 cursor-pointer shadow-lg shadow-primary/10"
                   >
                     {isSubmitting ? "ENVIANDO..." : "PUBLICAR RESEÑA"}
                     <FaPaperPlane className="text-xs" />
@@ -323,7 +323,7 @@ const Testimony = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.4 }}
-                    className="text-3xl font-black text-white mb-3 tracking-tight"
+                    className="text-2xl sm:text-3xl font-black text-white mb-3 tracking-tight"
                   >
                     ¡Feedback procesado con éxito!
                   </motion.h3>

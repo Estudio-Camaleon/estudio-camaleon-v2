@@ -62,7 +62,7 @@ const Process = () => {
             <span className="section-badge mb-6 inline-block tracking-[0.4em] text-xs">
               MÉTODO ESTUDIO CAMALEÓN
             </span>
-            <h2 className="text-5xl md:text-7xl lg:text-[100px] font-black text-white tracking-tighter leading-[0.95] md:leading-[1]">
+            <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-[100px] font-black text-white tracking-tighter leading-[0.95] md:leading-[1]">
               Desarrollamos con <br />
               <span className="text-primary italic whitespace-nowrap">
                 Mutación Ágil
@@ -77,7 +77,7 @@ const Process = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <p className="text-text-secondary text-lg md:text-2xl leading-relaxed border-l-2 border-primary/30 pl-6 md:pl-10">
+            <p className="text-text-secondary text-lg sm:text-xl md:text-2xl leading-relaxed border-l-2 border-primary/30 pl-6 md:pl-10">
               Scrum nos permite adaptarnos rápidamente a los cambios, mejorar
               continuamente y entregar valor real en cada{" "}
               <span className="text-white font-medium">iteración</span>.
@@ -86,7 +86,7 @@ const Process = () => {
         </div>
 
         {/* Pasos de Proceso */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-20 md:gap-12 lg:gap-24 xl:gap-32 mb-32 md:mb-40">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-12 lg:gap-24 xl:gap-32 mb-32 md:mb-40">
           {scrumSteps.map((step, index) => {
             const IconComponent = step.icon;
             return (
@@ -100,7 +100,7 @@ const Process = () => {
               >
                 {/* Visual: Número + Icono */}
                 <div className="relative mb-8 md:mb-12">
-                  <span className="text-[120px] md:text-[160px] lg:text-[200px] font-black leading-none text-white/[0.02] group-hover:text-primary/[0.06] transition-all duration-1000 select-none inline-block">
+                  <span className="text-[80px] sm:text-[100px] md:text-[120px] lg:text-[160px] xl:text-[200px] font-black leading-none text-white/[0.02] group-hover:text-primary/[0.06] transition-all duration-1000 select-none inline-block">
                     {step.number}
                   </span>
 

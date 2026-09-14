@@ -62,7 +62,7 @@ const Footer = () => {
       {/* ----------------------------- */}
 
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 text-pretty">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-16 text-pretty">
           {/* Columna 1: Branding y Redes */}
           <div className="flex flex-col gap-6">
             <div className="relative w-56 h-14">

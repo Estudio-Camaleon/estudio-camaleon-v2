@@ -140,7 +140,7 @@ export default function ProjectModal({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-3xl">
                 <button
                   onClick={() => setView("desktop")}
-                  className="group relative flex flex-col items-center gap-6 p-12 rounded-[2rem] bg-[#0f0f0f] border border-white/5 hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 shadow-xl"
+                  className="group relative flex flex-col items-center gap-6 p-8 sm:p-12 rounded-[2rem] bg-[#0f0f0f] border border-white/5 hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 shadow-xl"
                 >
                   <div className="p-6 rounded-3xl bg-white/5 group-hover:bg-primary/20 transition-colors">
                     <Monitor
@@ -155,7 +155,7 @@ export default function ProjectModal({
 
                 <button
                   onClick={() => setView("mobile")}
-                  className="group relative flex flex-col items-center gap-6 p-12 rounded-[2rem] bg-[#0f0f0f] border border-white/5 hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 shadow-xl"
+                  className="group relative flex flex-col items-center gap-6 p-8 sm:p-12 rounded-[2rem] bg-[#0f0f0f] border border-white/5 hover:border-primary/30 transition-all duration-300 hover:-translate-y-2 shadow-xl"
                 >
                   <div className="p-6 rounded-3xl bg-white/5 group-hover:bg-primary/20 transition-colors">
                     <Smartphone

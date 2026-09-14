@@ -44,13 +44,13 @@ export default function LandingExpressPage() {
             <FiZap className="w-3.5 h-3.5 animate-pulse" />
             Servicio Express
           </span>
-          <h1 className="title-main text-4xl sm:text-5xl md:text-6xl lg:text-5xl mb-8 leading-tight">
+          <h1 className="title-main text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8 leading-tight">
             Una página lista en <span className="text-primary">24–48 hs</span>{" "}
             <br />
             para que recibas consultas por{" "}
             <span className="text-primary"> WhatsApp</span>
           </h1>
-          <p className="text-text-secondary text-base md:text-xl mb-10 max-w-2xl mx-auto text-pretty font-light">
+          <p className="text-text-secondary text-base sm:text-lg md:text-xl mb-10 max-w-2xl mx-auto text-pretty font-light">
             Estrategia ágil y estética premium combinadas. La solución ideal
             para lanzar tu producto, servicio o campaña al mercado sin perder
             tiempo.
@@ -73,7 +73,7 @@ export default function LandingExpressPage() {
       <section className="py-12 relative z-10 max-w-5xl mx-auto px-6 w-full">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
           {/* Columna: Lo que incluye */}
-          <div className="bg-surface-dark/40 backdrop-blur-sm border border-border-dark p-8 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
+          <div className="bg-surface-dark/40 backdrop-blur-sm border border-border-dark p-6 sm:p-8 rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
             <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-primary" />
               Landing Express incluye:
@@ -92,7 +92,7 @@ export default function LandingExpressPage() {
           </div>
 
           {/* Columna: Lo que NO incluye (Disclaimer comercial crucial) */}
-          <div className="bg-surface-dark/20 backdrop-blur-sm border border-border-dark/60 p-8 rounded-2xl relative">
+          <div className="bg-surface-dark/20 backdrop-blur-sm border border-border-dark/60 p-6 sm:p-8 rounded-2xl relative overflow-hidden">
             <h3 className="text-xl font-bold text-white/90 mb-6 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-red-500" />❌ NO incluye:
             </h3>
@@ -111,7 +111,7 @@ export default function LandingExpressPage() {
             </ul>
 
             {/* Pie de la tarjeta: Información de Adicionales */}
-            <div className="pt-6 border-t border-border-dark/60 flex items-center justify-between bg-bg-darker/50 -mx-8 -mb-8 p-6 rounded-b-2xl">
+            <div className="pt-6 border-t border-border-dark/60 flex items-center justify-between bg-bg-darker/50 -mx-6 sm:-mx-8 -mb-6 sm:-mb-8 p-5 sm:p-6 rounded-b-2xl">
               <span className="text-xs md:text-sm text-text-secondary font-medium tracking-wide uppercase">
                 👉 Todo eso = adicional
               </span>
@@ -130,7 +130,7 @@ export default function LandingExpressPage() {
       <section className="pb-24 relative overflow-hidden text-center px-6">
         <div className="absolute inset-0 bg-primary/5 -z-10" />
         <div className="max-w-3xl mx-auto">
-          <h2 className="title-main text-3xl md:text-5xl mb-6">
+          <h2 className="title-main text-3xl sm:text-4xl md:text-5xl mb-6">
             ¿Listo para empezar a recibir <br className="hidden sm:block" />
             <span className="text-primary">consultas de clientes?</span>
           </h2>

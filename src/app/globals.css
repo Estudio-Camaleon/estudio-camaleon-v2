@@ -30,7 +30,7 @@
 
   /* Botón principal */
   .cta-button {
-    @apply px-8 py-3.5 rounded-xl font-bold bg-primary text-dark 
+    @apply px-6 sm:px-8 py-3.5 rounded-xl font-bold bg-primary text-dark 
            transition-all duration-300 hover:scale-105 hover:brightness-110 
            active:scale-98 font-sans overflow-hidden;
   }
